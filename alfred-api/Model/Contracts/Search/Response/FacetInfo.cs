@@ -1,11 +1,10 @@
-﻿namespace alfred_api.Model.Response.Search
+﻿namespace alfred_api.Model.Contracts.Search.Response
 {
-    public class SelectedFacet
+    public class FacetInfo
     {
         public string Name { get; set; }
         public int Count { get; set; }
         public bool Selected { get; set; }
-        public object Id { get; set; }
         public object Parent { get; set; }
         public int Position { get; set; }
         public string DisplayName { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace alfred_api.Model.Request.Search
+namespace alfred_api.Model.Contracts.Search.Request
 {
     public class SearchQuery
     {

@@ -1,6 +1,6 @@
-﻿namespace alfred_api.Model.Response.Search
+﻿namespace alfred_api.Model.Dtos.Search.Response
 {
-    public class Facet
+    public class FacetDto
     {
         public string Name { get; set; }
         public string Type { get; set; }

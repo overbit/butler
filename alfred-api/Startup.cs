@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using alfred_api.Config;
+using alfred_api.Services;
+using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +23,9 @@ namespace alfred_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddCustomServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +39,17 @@ namespace alfred_api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+    internal static class CustomExtensionsMethods
+    {
+        internal static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<UrlsConfig>(configuration.GetSection("urls"));
+
+            services.AddScoped<ISearchService, SearchService>();
+
+            return services;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace alfred_api.Model.Response.Search
+namespace alfred_api.Model.Contracts.Search.Response
 {
     public class Product
     {
