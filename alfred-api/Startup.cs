@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Net.Http;
 using alfred_api.Config;
 using alfred_api.Services;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
 
 namespace alfred_api
 {
@@ -22,10 +25,11 @@ namespace alfred_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddCustomServices(Configuration);
+            services.AddHttpServices()
+                    .AddCustomServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,9 +51,35 @@ namespace alfred_api
         {
             services.Configure<UrlsConfig>(configuration.GetSection("urls"));
 
-            services.AddScoped<ISearchService, SearchService>();
+            return services;
+        }
+
+        public static IServiceCollection AddHttpServices(this IServiceCollection services)
+        {
+            //register delegating handlers
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //register http services
+            services.AddHttpClient<ISearchService, SearchService>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             return services;
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
         }
     }
 }

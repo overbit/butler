@@ -1,31 +1,27 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using alfred_api.Model.Contracts.Search.Request;
 using alfred_api.Model.Dtos.Search.Request;
 using alfred_api.Services;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace alfred_api.Controllers
 {
-//    [Route("api/[controller]")]
-    [Route("api/alfred")]
+    [Route("api/alfred/[action]")]
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private ISearchService searchService;
-        private readonly IMapper mapper;
-
-        private HomeController(ISearchService searchService, IMapper mapper)
+        private readonly ISearchService searchService;
+        
+        public HomeController(ISearchService searchService)
         {
             this.searchService = searchService;
-            this.mapper = mapper;
         }
 
+
         [HttpGet]
-        public async Task<ActionResult<string>> GetFacets(SearchQueryDto dto)
+        public async Task<ActionResult<string>> Facet(SearchQueryDto dto)
         {
-            var searchQuery = mapper.Map<SearchQuery>(dto);
+            var searchQuery = MapTo(dto);
 
             var result = await searchService.GetFacets(searchQuery);
 
@@ -33,9 +29,9 @@ namespace alfred_api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<string>> GetProducts(SearchQueryDto dto)
+        public async Task<ActionResult<string>> Product(SearchQueryDto dto)
         {
-            var searchQuery = mapper.Map<SearchQuery>(dto);
+            var searchQuery = MapTo(dto);
 
             var result = await searchService.GetProducts(searchQuery);
 
@@ -45,6 +41,23 @@ namespace alfred_api.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return Content("X");
+        }
+
+        private SearchQuery MapTo(SearchQueryDto dto)
+        {
+            return new SearchQuery
+            {
+                TargetName = dto.TargetName,
+                Application = dto.Application,
+                Reactivity = dto.Reactivity,
+                HostSpecies = dto.HostSpecies
+            };
         }
     }
 }
