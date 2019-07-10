@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace alfred_api.Controllers
 {
-    [Route("api/alfred/[action]")]
+    [Route("api/alfred")]
     [ApiController]
     public class HomeController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace alfred_api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("facet")]
         public async Task<ActionResult<string>> Facet(SearchQueryDto dto)
         {
             var searchQuery = MapTo(dto);
@@ -28,7 +28,7 @@ namespace alfred_api.Controllers
             return new JsonResult(result);
         }
 
-        [HttpGet]
+        [HttpGet("product")]
         public async Task<ActionResult<string>> Product(SearchQueryDto dto)
         {
             var searchQuery = MapTo(dto);
@@ -38,15 +38,24 @@ namespace alfred_api.Controllers
             return new JsonResult(result);
         }
 
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("")]
+        public async Task<ActionResult> Test(bool appOnly = false)
         {
-        }
+            var res = "Alfred at your service master Bruce";
+//
+//            if (!appOnly)
+//            {
+//                try
+//                {
+//                    await searchService.GetFacets(new );
+//                }
+//                catch
+//                {
+//
+//                }
+//            }
 
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return Content("X");
+            return Content(res);
         }
 
         private SearchQuery MapTo(SearchQueryDto dto)
