@@ -49,7 +49,7 @@ namespace alfred_api.Controllers
             var searchQuery = mapper.Map<SearchQuery>(dto);
             
             // TODO remove this workaround
-            searchQuery.PageSize = 100000;
+            searchQuery.PageSize = 200000;
 
             var searchResultModel = await searchService.GetProducts(searchQuery);
 

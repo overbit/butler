@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using alfred_api.Config;
 using alfred_api.Model.Contracts.Search.Request;
@@ -40,11 +41,12 @@ namespace alfred_api.Services
 
         private static HttpRequestMessage RequestMessage(string url, HttpMethod method, SearchQuery content)
         {
-            return new HttpRequestMessage(method, url)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(content))
-            };
+            var request = new HttpRequestMessage(method, url);
 
+            request.Content = new StringContent(JsonConvert.SerializeObject(content));
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return request;
         }
     }
 }
