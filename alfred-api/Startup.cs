@@ -2,6 +2,7 @@
 using System.Net.Http;
 using alfred_api.Config;
 using alfred_api.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,8 @@ namespace alfred_api
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+           
+
             services.AddHttpServices()
                     .AddCustomServices(Configuration);
         }
@@ -49,12 +52,23 @@ namespace alfred_api
     {
         internal static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
+            // Bind configurations
             services.Configure<UrlsConfig>(configuration.GetSection("urls"));
 
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            
             return services;
         }
 
-        public static IServiceCollection AddHttpServices(this IServiceCollection services)
+
+        internal static IServiceCollection AddHttpServices(this IServiceCollection services)
         {
             //register delegating handlers
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

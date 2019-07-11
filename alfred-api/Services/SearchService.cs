@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using alfred_api.Config;
 using alfred_api.Model.Contracts.Search.Request;
@@ -21,22 +19,32 @@ namespace alfred_api.Services
             this.urls = config.Value;
         }
 
-        public async Task<IList<FacetCategory>> GetFacets(SearchQuery model)
+        public async Task<SearchResultPocModel> GetFacets(SearchQuery model)
         {
-            var data = await httpClient.GetStringAsync(urls.Search + UrlsConfig.SearchOperations.GetList());
+            var facetUrl = urls.Search + UrlsConfig.SearchOperations.GetList();
 
-            var facets = !string.IsNullOrEmpty(data) ? JsonConvert.DeserializeObject<SearchResultPOCModel>(data).FacetCategories : null;
-
-            return facets;
+            var responseMessage = await httpClient.SendAsync(RequestMessage(facetUrl, HttpMethod.Get, model));
+            var responseContent = await responseMessage.Content.ReadAsStringAsync();
+            return !string.IsNullOrEmpty(responseContent) ? JsonConvert.DeserializeObject<SearchResultPocModel>(responseContent) : null;
         }
 
-        public async Task<IList<Product>> GetProducts(SearchQuery model)
+        public async Task<SearchResultPocModel> GetProducts(SearchQuery model)
         {
-            var data = await httpClient.GetStringAsync(urls.Search + UrlsConfig.SearchOperations.GetList());
+            var facetUrl = urls.Search + UrlsConfig.SearchOperations.GetList();
 
-            var products = !string.IsNullOrEmpty(data) ? JsonConvert.DeserializeObject<SearchResultPOCModel>(data).Products.ToList() : null;
+            var responseMessage = await httpClient.SendAsync(RequestMessage(facetUrl, HttpMethod.Get, model));
+            var responseContent = await responseMessage.Content.ReadAsStringAsync();
 
-            return products;
+            return !string.IsNullOrEmpty(responseContent) ? JsonConvert.DeserializeObject<SearchResultPocModel>(responseContent) : null; 
+        }
+
+        private static HttpRequestMessage RequestMessage(string url, HttpMethod method, SearchQuery content)
+        {
+            return new HttpRequestMessage(method, url)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(content))
+            };
+
         }
     }
 }

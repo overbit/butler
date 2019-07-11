@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using alfred_api.Model.Dtos.Search.Response;
 
 namespace alfred_api.Model.Contracts.Search.Response
 {
-    public class SearchResultPOCModel
+    public class SearchResultPocModel
     {
         public IList<FacetCategory> FacetCategories { get; set; }
         public IEnumerable<Product> Products { get; set; }
