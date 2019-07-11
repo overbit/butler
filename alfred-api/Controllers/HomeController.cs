@@ -57,7 +57,7 @@ namespace alfred_api.Controllers
 
             return Content(res);
         }
-
+        
         private SearchQuery MapTo(SearchQueryDto dto)
         {
             return new SearchQuery
