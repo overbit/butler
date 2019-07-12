@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using alfred_api.Model.Dtos.Search.Response;
 
 namespace alfred_api.Model.Contracts.Search.Response
 {

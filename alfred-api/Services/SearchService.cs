@@ -26,7 +26,15 @@ namespace alfred_api.Services
 
             var responseMessage = await httpClient.SendAsync(RequestMessage(facetUrl, HttpMethod.Get, model));
             var responseContent = await responseMessage.Content.ReadAsStringAsync();
-            return !string.IsNullOrEmpty(responseContent) ? JsonConvert.DeserializeObject<SearchResultPocModel>(responseContent) : null;
+            var res = !string.IsNullOrEmpty(responseContent) ? JsonConvert.DeserializeObject<SearchResultPocModel>(responseContent) : null;
+
+            if (res == null) return new SearchResultPocModel();
+
+            foreach (var fc in res.FacetCategories)
+            {
+                fc.Facet.Name = fc.Facet.Name.Replace("Facet", string.Empty);
+            }
+            return res;
         }
 
         public async Task<SearchResultPocModel> GetProducts(SearchQuery model)

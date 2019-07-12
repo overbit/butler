@@ -1,4 +1,5 @@
-﻿using alfred_api.Model.Contracts.Search.Request;
+﻿using System.Linq;
+using alfred_api.Model.Contracts.Search.Request;
 using alfred_api.Model.Contracts.Search.Response;
 using alfred_api.Model.Dtos.Search.Request;
 using alfred_api.Model.Dtos.Search.Response;
@@ -17,11 +18,13 @@ namespace alfred_api
                 .ForMember(dto => dto.TotalItems, opt => opt.MapFrom(model => model.TotalItems));
 
             CreateMap<Product, ProductsDto.ProductDto>();
-            CreateMap<FacetCategory, FacetCategoryDto>();
-            CreateMap<Facet, FacetDto>();
+            CreateMap<FacetCategory, FacetCategoryDto>()
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(category => category.Facet.Name))
+                .ForMember(dto => dto.Facets,
+                    opt => opt.MapFrom(category => category.FacetInfos.Select(info => new FacetInfoDto
+                        {Name = info.Name, Count = info.Count, Position = info.Position})))
+                ;
             CreateMap<FacetInfo, FacetInfoDto>();
-            CreateMap<Filter, FilterDto>();
-            CreateMap<SelectedFacet, SelectedFacetDto>();
             CreateMap<Product.Productindexmodel, ProductsDto.ProductDto.Productindexmodel>();
             CreateMap<Product.Linksviewmodel, ProductsDto.ProductDto.Linksviewmodel>();
             CreateMap<Product.Visibleproperty, ProductsDto.ProductDto.Visibleproperty>();

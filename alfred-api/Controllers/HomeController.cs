@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using alfred_api.Model.Contracts.Search.Request;
-using alfred_api.Model.Contracts.Search.Response;
 using alfred_api.Model.Dtos.Search.Request;
 using alfred_api.Model.Dtos.Search.Response;
 using alfred_api.Services;
@@ -25,7 +24,7 @@ namespace alfred_api.Controllers
         }
 
 
-        [HttpGet("facet")]
+        [HttpPost("facet")]
         public async Task<ActionResult<string>> Facet(FacetQueryDto dto)
         {
             var facetRequired = dto.RequiredFacets;
@@ -34,17 +33,17 @@ namespace alfred_api.Controllers
 
             var searchResultModel = await searchService.GetFacets(searchQuery);
 
-            var result = mapper.Map<List<FacetCategory>>(searchResultModel.FacetCategories);
+            var result = mapper.Map<List<FacetCategoryDto>>(searchResultModel.FacetCategories);
 
             // TODO this should be handled by the service
-            var filteredResult = result.Where(category =>
-                facetRequired.Contains(category.Facet.Name.Replace("Facet", string.Empty)));
+            var filteredResult = result
+                        .Where(category => facetRequired.Contains(category.Name));
 
             return new JsonResult(filteredResult);
         }
 
-        [HttpGet("product")]
-        public async Task<ActionResult<string>> Product(SearchQueryDto dto)
+        [HttpPost("product")]
+        public async Task<ActionResult<string>> Product(SearchQueryDto dto, bool totalItemOnly = false)
         {
             var searchQuery = mapper.Map<SearchQuery>(dto);
             
@@ -53,13 +52,18 @@ namespace alfred_api.Controllers
 
             var searchResultModel = await searchService.GetProducts(searchQuery);
 
+            if (totalItemOnly)
+            {
+                return new JsonResult(new ProductsDto{TotalItems = searchResultModel.TotalItems});
+            }
+
             var result = mapper.Map<ProductsDto>(searchResultModel);
 
             return new JsonResult(result);
         }
 
         [HttpGet("")]
-        public async Task<ActionResult> Test(bool appOnly = false)
+        public ActionResult Test(bool appOnly = false)
         {
             var res = "Alfred at your service master Bruce";
 //

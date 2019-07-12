@@ -28,9 +28,7 @@ namespace alfred_api
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-           
-
+            
             services.AddHttpServices()
                     .AddCustomServices(Configuration);
         }
@@ -39,7 +37,14 @@ namespace alfred_api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+                
+                app.UseCors(builder => 
+                    builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
+            }
             else
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
