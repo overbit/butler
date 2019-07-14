@@ -1,15 +1,15 @@
-apiVersion: extensions/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    testLabel: testValue
-  name: alfred
-  namespace: default
+    DeploymentName: alfred-api
+  name: alfred-api
+  namespace: octopus-deploy
 spec:
   replicas: 2
   selector:
     matchLabels:
-      Octopus.Kubernetes.DeploymentName: alfred  
+      DeploymentName: alfred-api
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,12 +18,11 @@ spec:
   template:
     metadata:
       labels:
-        name:  alfred-api
+        DeploymentName:  alfred-api
     spec:
       containers:
-      - image:  ipedrazas/docmock
+      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred:latest
         name:  alfred-api
-
         livenessProbe:
           httpGet:
             path: /api/health/live
@@ -40,21 +39,22 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: urls__search
-          value: http://p2-ci-web1.abcam.com    
+          value: http://p2-ci-web1.abcam.com
         ports:
         - containerPort: 80
           name: http
           protocol: TCP
       restartPolicy: Always
-      imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   labels:
-    testLabel: testValue
+    DeploymentName: alfred-api
   name: alfred-api
-  namespace: default
+  namespace: octopus-deploy
 spec:
   externalTrafficPolicy: Cluster
   ports:
@@ -69,6 +69,6 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    Octopus.Kubernetes.DeploymentName: alfred
+    DeploymentName: alfred-api
   sessionAffinity: None
-  type: NodePort
+  type: LoadBalancer
