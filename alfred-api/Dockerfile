@@ -5,9 +5,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["alfred-api/alfred-api.csproj", "alfred-api/"]
+COPY ["*.csproj", "alfred-api/"]
 RUN dotnet restore "alfred-api/alfred-api.csproj"
-COPY . .
+COPY . "alfred-api/"
 WORKDIR "/src/alfred-api"
 RUN dotnet build "alfred-api.csproj" -c Release -o /app
 
