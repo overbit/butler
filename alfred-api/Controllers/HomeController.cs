@@ -9,6 +9,7 @@ using alfred_api.Model.Dtos.Search.Response;
 using alfred_api.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace alfred_api.Controllers
 {
@@ -22,11 +23,11 @@ namespace alfred_api.Controllers
         // TODO Remove this - Only for testing
         private readonly UrlsConfig urls;
 
-        public HomeController(ISearchService searchService, IMapper mapper, UrlsConfig urls)
+        public HomeController(ISearchService searchService, IMapper mapper, IOptions<UrlsConfig> config)
         {
             this.searchService = searchService;
             this.mapper = mapper;
-            this.urls = urls;
+            this.urls = config.Value;
         }
 
 
