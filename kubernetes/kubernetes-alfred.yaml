@@ -39,7 +39,7 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: urls__search
-          value: http://p2-ci-web1.abcam.com
+          value: http://172.29.57.41
         ports:
         - containerPort: 80
           name: http
