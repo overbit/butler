@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using alfred_api.Config;
 using alfred_api.Model.Contracts.Search.Request;
 using alfred_api.Model.Dtos.Search.Request;
 using alfred_api.Model.Dtos.Search.Response;
@@ -16,11 +18,15 @@ namespace alfred_api.Controllers
     {
         private readonly ISearchService searchService;
         private readonly IMapper mapper;
-        
-        public HomeController(ISearchService searchService, IMapper mapper)
+
+        // TODO Remove this - Only for testing
+        private readonly UrlsConfig urls;
+
+        public HomeController(ISearchService searchService, IMapper mapper, UrlsConfig urls)
         {
             this.searchService = searchService;
             this.mapper = mapper;
+            this.urls = urls;
         }
 
 
@@ -66,6 +72,11 @@ namespace alfred_api.Controllers
         public ActionResult Test(bool appOnly = false)
         {
             var res = "Alfred at your service master Bruce";
+
+            res += Environment.NewLine;
+            res += "Connect to: ";
+            res += urls.Search;
+
 //
 //            if (!appOnly)
 //            {
