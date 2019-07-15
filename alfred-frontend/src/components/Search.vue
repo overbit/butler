@@ -6,6 +6,7 @@
         <Dropdown :options=options
                   :name=categoryName
                   :maxItem=maxDropdownItems
+                  v-on:selected="saveSelection"
                   placeholder="Please select an option">
         </Dropdown>
     </div>
@@ -21,21 +22,29 @@
             Dropdown
         },
         props: {
-               facetCategory: Object
+            facetCategory: Object,
+            selectedFacets: Object
             },
         data() {
             return {
                 options: this.facetCategory.Facets.map(function (item) {
-                    return { id: item.name, name: item.name + " (" + item.count + ")"}
+                    return { id: item.name, name: item.name }
                 }),
                 categoryName: this.facetCategory.Name,
                 maxDropdownItems: this.facetCategory.Facets.length
             }
         },
-        created() {
-            console.log({ created: this });
-        }
-        
+        methods: {
+            saveSelection(selection) {
+                this.selectedFacets[this.categoryName] = selection.id;
+                
+                /* eslint-disable no-console */
+                console.log({ selectedFacets: this.selectedFacets });
+            }
+        },
+        //created() {
+        //    console.log({ created: this });
+        //},
         //mounted() {
         //    console.log({ mounted: this });
         //}

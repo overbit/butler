@@ -1,9 +1,10 @@
 <template>
     <div class="List">
         <h1>List</h1>
-        <b-list-group>
+        <p>{{msg}}</p>
+        <!--<b-list-group>
             <ListItem v-for="item in List"/>
-        </b-list-group>
+        </b-list-group>-->
     </div>
 </template>
 
@@ -12,6 +13,7 @@
         name: 'List',
         props: {
             List: Array,
+            msg: String
         }
     };
 </script>

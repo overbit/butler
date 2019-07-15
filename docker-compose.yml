@@ -9,3 +9,9 @@ services:
     environment:
         urls__search: "Pass@word"
     container_name: alfred-api
+  alfred-frontend:
+    image: ${DOCKER_REGISTRY-}alfredfrontend
+    build:
+      context: .
+      dockerfile: alfred-frontend/Dockerfile
+    container_name: alfred-frontend

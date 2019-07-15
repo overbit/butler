@@ -30,9 +30,14 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".dockerignore">
+      <SubType>Content</SubType>
+      <DependentUpon>Dockerfile</DependentUpon>
+    </Content>
     <Content Include="axios.map" />
     <Content Include="axios.min.js" />
     <Content Include="axios.min.map" />
+    <None Include="Dockerfile" />
     <Content Include="lib\axios\axios.js" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
