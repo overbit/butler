@@ -21,6 +21,7 @@ spec:
         DeploymentName:  alfred-api
     spec:
       containers:
+      #API
       - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-api:latest
         name:  alfred-api
         livenessProbe:
@@ -42,6 +43,13 @@ spec:
           value: http://172.29.57.41
         ports:
         - containerPort: 80
+          name: http
+          protocol: TCP
+      #Frontend
+      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-frontend:latest
+        name:  alfred-api
+        ports:
+        - containerPort: 8080
           name: http
           protocol: TCP
       restartPolicy: Always
