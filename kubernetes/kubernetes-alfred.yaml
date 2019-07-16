@@ -21,7 +21,7 @@ spec:
         DeploymentName:  alfred-api
     spec:
       containers:
-      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred:latest
+      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-api:latest
         name:  alfred-api
         livenessProbe:
           httpGet:
