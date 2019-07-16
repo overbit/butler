@@ -2,14 +2,14 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    DeploymentName: alfred-api
-  name: alfred-api
+    DeploymentName: alfred
+  name: alfred
   namespace: octopus-deploy
 spec:
   replicas: 2
   selector:
     matchLabels:
-      DeploymentName: alfred-api
+      DeploymentName: alfred
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        DeploymentName:  alfred-api
+        DeploymentName:  alfred
     spec:
       containers:
       #API
@@ -60,8 +60,8 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   labels:
-    DeploymentName: alfred-api
-  name: alfred-api
+    DeploymentName: alfred
+  name: alfred
   namespace: octopus-deploy
 spec:
   externalTrafficPolicy: Cluster
@@ -77,6 +77,6 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    DeploymentName: alfred-api
+    DeploymentName: alfred
   sessionAffinity: None
   type: LoadBalancer
