@@ -67,15 +67,13 @@ spec:
   externalTrafficPolicy: Cluster
   ports:
   - name: https
-    nodePort: 31433
     port: 443
     protocol: TCP
     targetPort: 80
   - name: http
-    nodePort: 31080
     port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
     DeploymentName: alfred
   sessionAffinity: None
