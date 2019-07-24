@@ -40,7 +40,7 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: urls__search
-          value: http://172.29.57.41
+          value: http://172.29.57.49
         ports:
         - containerPort: 80
           name: http
