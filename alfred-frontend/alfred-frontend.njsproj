@@ -34,21 +34,24 @@
       <SubType>Content</SubType>
       <DependentUpon>Dockerfile</DependentUpon>
     </Content>
+    <Content Include=".env" />
+    <Content Include=".env.development" />
     <Content Include="axios.map" />
     <Content Include="axios.min.js" />
     <Content Include="axios.min.map" />
+    <Content Include="src\router.js" />
+    <Content Include="src\store.js" />
+    <Content Include="src\views\Results.vue" />
+    <Content Include="src\views\Home.vue" />
     <None Include="Dockerfile" />
     <Content Include="lib\axios\axios.js" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
     <Content Include="src\App.vue" />
     <Content Include="src\components\ListItem.vue" />
-    <Content Include="src\components\List.vue" />
-    <Content Include="src\components\Search.vue" />
-    <Content Include="src\components\Home.vue" />
+    <Content Include="src\components\FacetCategory.vue" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="src\routes.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />
@@ -58,6 +61,7 @@
     <Folder Include="src\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\components\" />
+    <Folder Include="src\views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="babel.config.js" />

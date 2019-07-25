@@ -1,5 +1,5 @@
 <template>
-    <div class="search">
+    <div class="facet-category">
         <h2>{{facetCategory.Name}}</h2>
         <!--<p>{{ facetCategory.text }}</p>-->
 
@@ -7,6 +7,7 @@
                   :name=categoryName
                   :maxItem=maxDropdownItems
                   v-on:selected="saveSelection"
+                  v-on:filter="getDropdownValues"
                   placeholder="Please select an option">
         </Dropdown>
     </div>
@@ -17,7 +18,7 @@
     import Dropdown from 'vue-simple-search-dropdown';
 
     export default {
-        name: 'Search',
+        name: 'FacetCategory',
         components: {
             Dropdown
         },
@@ -40,6 +41,11 @@
                 
                 /* eslint-disable no-console */
                 console.log({ selectedFacets: this.selectedFacets });
+
+                //router.push({ name: 'results', params: { selectedFacets: this.selectedFacets } })
+            },
+            getDropdownValues(keyword) {
+                console.log('You could refresh options by querying the API with '+keyword);
             }
         },
         //created() {
