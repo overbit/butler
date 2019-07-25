@@ -7,7 +7,6 @@
                   :name=categoryName
                   :maxItem=maxDropdownItems
                   v-on:selected="saveSelection"
-                  v-on:filter="getDropdownValues"
                   placeholder="Please select an option">
         </Dropdown>
     </div>
@@ -16,6 +15,7 @@
 
 <script>
     import Dropdown from 'vue-simple-search-dropdown';
+    import client from '@/client.js';
 
     export default {
         name: 'FacetCategory',
@@ -40,12 +40,9 @@
                 this.selectedFacets[this.categoryName] = selection.id;
                 
                 /* eslint-disable no-console */
-                console.log({ selectedFacets: this.selectedFacets });
+                //console.log({ selectedFacets: this.selectedFacets });
 
                 //router.push({ name: 'results', params: { selectedFacets: this.selectedFacets } })
-            },
-            getDropdownValues(keyword) {
-                console.log('You could refresh options by querying the API with '+keyword);
             }
         },
         //created() {
