@@ -1,9 +1,11 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using alfred_api.Config;
 using alfred_api.Model.Contracts.Search.Request;
 using alfred_api.Model.Contracts.Search.Response;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -20,11 +22,13 @@ namespace alfred_api.Services
             this.urls = config.Value;
         }
 
-        public async Task<SearchResultPocModel> GetFacets(SearchQuery model)
+        public async Task<SearchResultPocModel> GetFacets(SearchQuery sq)
         {
             var facetUrl = urls.Search + UrlsConfig.SearchOperations.GetList();
 
-            var responseMessage = await httpClient.SendAsync(RequestMessage(facetUrl, HttpMethod.Get, model));
+            var url = QueryHelpers.AddQueryString(facetUrl, GetQueryParams(sq));
+
+            var responseMessage = await httpClient.GetAsync(url);
             var responseContent = await responseMessage.Content.ReadAsStringAsync();
             var res = !string.IsNullOrEmpty(responseContent) ? JsonConvert.DeserializeObject<SearchResultPocModel>(responseContent) : null;
 
@@ -49,12 +53,38 @@ namespace alfred_api.Services
 
         private static HttpRequestMessage RequestMessage(string url, HttpMethod method, SearchQuery content)
         {
-            var request = new HttpRequestMessage(method, url);
+            var request = new HttpRequestMessage(method, url)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(content))
+            };
 
-            request.Content = new StringContent(JsonConvert.SerializeObject(content));
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             return request;
+        }
+
+        private static Dictionary<string, string> GetQueryParams(SearchQuery queryObj)
+        {
+            var queryStringParams = new Dictionary<string, string>();
+
+            if (!string.IsNullOrWhiteSpace(queryObj.TargetName))
+            {
+                queryStringParams.Add("selected.targetName", queryObj.TargetName);
+            }
+            if (!string.IsNullOrWhiteSpace(queryObj.Application))
+            {
+                queryStringParams.Add("selected.application", queryObj.Application);
+            }
+            if (!string.IsNullOrWhiteSpace(queryObj.Reactivity))
+            {
+                queryStringParams.Add("selected.reactivity", queryObj.Reactivity);
+            }
+            if (!string.IsNullOrWhiteSpace(queryObj.HostSpecies))
+            {
+                queryStringParams.Add("selected.hostSpecies", queryObj.HostSpecies);
+            }
+
+            return queryStringParams;
         }
     }
 }
