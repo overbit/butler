@@ -6,11 +6,12 @@
                                v-bind:facetCategory="fc"
                                v-bind:selectedFacets="selectedFacets"
                                v-bind:key="fc.id"
-                               v-on:new-selection="updateFacetCategoryList" />
+                               v-on:new-selection="updateFacetCategoryList"
+                               v-on:new-custom-option="updatedCustomOption" />
                 <b-row>
                     <b-col></b-col>
                     <b-col cols="3">
-                        <b-button block variant="outline-primary" v-on:click="search">Search</b-button>
+                        <b-button block variant="outline-primary" v-on:click="search"  :disabled="!!buttonDisabled">Search</b-button>
                     </b-col>
                     <b-col></b-col>
                 </b-row>
@@ -45,16 +46,9 @@
         data() {
             return {
                 error: null,
-                //reqBody: {
-                //    "TargetName": "",
-                //    "Application": "",
-                //    "Reactivity": "",
-                //    "HostSpecies": "",
-                //    "RequiredFacets": ["TargetName", "Application", "Reactivity", "HostSpecies"]
-                //},
+                buttonDisabled: null,
                 facetCategoryList: [],
-                msg: null,
-                searchKeyword: null,
+                searchKeyword: "",
                 selectedFacets: {
                     "TargetName": "",
                     "Application": "",
@@ -66,26 +60,22 @@
             }
         },
         methods: {
-            search: function () {
+            search() {
                 /* eslint-disable no-console */
-                //console.log(this);
-                /* eslint-enable no-console */
+                
                 let that = this;
-
-                window.location.href ="http://dev.abcam.com/products?"
-                + "keywords=" + that.selectedFacets["TargetName"]
-                + "&selected.targetName=" +  that.selectedFacets["TargetName"] 
-                + "&selected.application=" + that.selectedFacets["Application"] 
-                + "&selected.hostSpecies=" + that.selectedFacets["HostSpecies"] 
-                + "&selected.reactivity=" + that.selectedFacets["Reactivity"] ;
-
-                // axios.post('/alfred/product', that.selectedFacets)
-                //     .then(function (response) {
-                //         this.msg = response.data;
-                //     });
+                let params = { searchKeyword: that.searchKeyword, selectedFacets: that.selectedFacets };
+                this.$router.push({ name: 'results', params: params })
+            },
+            updatedCustomOption(sel){
+                this.searchKeyword = sel;
             },
             async updateFacetCategoryList(sel) {
+                this.buttonDisabled = true;
                 /* eslint-disable no-console */
+                if (!sel.id && !sel.customOption) {
+                    return;
+                }
 
                 let that = this;
                 let modCategory = that.facetCategoryList.filter(function (item) { return item.Name === sel.category })[0];
@@ -106,9 +96,9 @@
                         that.mapFacetOptions(item);
                     }
                 }
+                this.buttonDisabled = null;
             },
             mapFacetOptions(fc) {
-                console.log(fc);
                 fc.FacetOptions = fc.Facets.map(function (item) {
                     let value = item.name + '   ' + item.count ;
                     return { id: item.name, name: value }

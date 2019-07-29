@@ -13,7 +13,7 @@
         </div>
         <div v-if="facetCategory.Name === 'TargetName'" class="col-sm-6"  >
             If you cannot find the target add it here:
-            <input v-model="customOption" placeholder="p53" />
+            <input v-model="customOption" placeholder="p53" @input="updatedCustomOption" />
         </div>
         <!--<b-button v-on:click="confirmSelection">Confirm</b-button>-->
     </div>
@@ -55,6 +55,9 @@
 
                 this.$emit('new-selection', this.selectedFacet);
             },
+            updatedCustomOption(){
+                this.$emit('new-custom-option', this.customOption);
+            }
             //confirmSelection() { 
             //    this.$emit('new-selection', this.selectedFacet);
             //}

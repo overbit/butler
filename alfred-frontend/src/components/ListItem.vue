@@ -5,7 +5,7 @@
                 <b-card-img :src=url class="rounded-0"></b-card-img>
             </b-col>
             <b-col md="6">
-                <b-card-body title="Horizontal Card">
+                <b-card-body :title="item">
                     <b-card-text>
                         This is a wider card with supporting text as a natural lead-in to additional content.
                         This content is a little bit longer.
@@ -20,7 +20,7 @@
     export default {
         name: 'ListItem',
         props: {
-            item: Array,
+            item: Object,
         },
         data() {
             return {

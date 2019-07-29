@@ -2,11 +2,9 @@
 
 export default {
     /*--------Ajax--------*/
-    async facets(req) {
-        let list = [];
-
+    async api(url, req) {
         /* eslint-disable no-console */
-        let response = await axios.post('/alfred/facet', req)
+        return await axios.post(url, req)
             .catch(function (error) {
                 if (error.response) {
                     // The request was made and the server responded with a status code
@@ -24,22 +22,27 @@ export default {
                     console.log('Error', error.message);
                 }
                 console.log(error.config); 
-
                 alert("alfred-api not responding. Check console for more details");
             });
 
+    },
+    async facets(req) {
+        let response = await this.api('/alfred/facet', req);
+        let list = [];
         if (response) {
-        console.log({ "alfred-response" : response.data });
-        response.data.forEach(function (el) {
-            list.push(
-                {
-                    Name: el.name,
-                    Facets: el.facets
-                }
-            );
-        });
+            console.log({ "alfred-response": response.data });
+            response.data.forEach(function (el) {
+                list.push(
+                    {
+                        Name: el.name,
+                        Facets: el.facets
+                    }
+                );
+            });
         }
-        /* eslint-enable no-console */
         return list;
+    },
+    async products(req) {
+        return await this.api('/alfred/product', req);
     }
 }
