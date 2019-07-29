@@ -1,22 +1,24 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
 
 namespace alfred_api.Model.Contracts.Search.Request
 {
     public class SearchQuery
     {
-        [Description("selected.targetName")]
+        [JsonProperty("selected.targetName")]
         public string TargetName { get; set; }
 
-        [Description("selected.application")]
+        [JsonProperty("selected.application")]
         public string Application { get; set; }
 
-        [Description("selected.hostSpecies")]
+        [JsonProperty("selected.hostSpecies")]
         public string Reactivity { get; set; }
 
-        [Description("selected.reactivity")]
+        [JsonProperty("selected.reactivity")]
         public string HostSpecies { get; set; }
 
-        [Description("PageSize")]
+        [JsonProperty("PageSize")]
         public int PageSize { get; set; }
+        [JsonProperty("PageNumber")]
+        public int PageNumber { get; set; }
     }
 }

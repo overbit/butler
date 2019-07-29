@@ -50,20 +50,21 @@ namespace alfred_api.Controllers
         }
 
         [HttpPost("product")]
-        public async Task<ActionResult<string>> Product(SearchQueryDto dto, bool totalItemOnly = false)
+        public async Task<ActionResult<string>> Product(SearchQueryDto dto,[FromQuery] int size = 0, [FromQuery] int page = 1)
         {
             var searchQuery = mapper.Map<SearchQuery>(dto);
-            
+
+            // TODO refactor and protect load on search server
+            searchQuery.PageSize = size;
+            searchQuery.PageNumber = page;
             // TODO remove this workaround
-            searchQuery.PageSize = 200000;
-
-            var searchResultModel = await searchService.GetProducts(searchQuery);
-
-            if (totalItemOnly)
+            if (size == 0)
             {
-                return new JsonResult(new ProductsDto{TotalItems = searchResultModel.TotalItems});
+                searchQuery.PageSize = 100000;
             }
 
+            var searchResultModel = await searchService.GetProducts(searchQuery);
+            
             var result = mapper.Map<ProductsDto>(searchResultModel);
 
             return new JsonResult(result);
