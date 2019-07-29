@@ -1,33 +1,19 @@
 <template>
-    <div>
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex flex-row">
-                    <img src="" class="img-lg rounded" />
-                    <div class="ml-3">
-                        <h6>Thomas Edison</h6>
-                        <p class="text-muted">thomas@gmail.com</p>
-                        <p class="mt-2 text-success font-weight-bold">Developer</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="list d-flex align-items-center pt-3">
-            <img class="img-sm rounded-circle" src="" alt="">
-            <div class="wrapper w-100 ml-3">
-                <p class="mb-0"><b>Nateila </b>posted in Material</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <i class="mdi mdi-clock text-muted mr-1"></i>
-                        <p class="mb-0">That's awesome!</p>
-                    </div>
-                    <small class="text-muted ml-auto">1 hours ago</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+    <b-card no-body class="overflow-hidden" style="">
+        <b-row no-gutters>
+            <b-col md="1">
+                <b-card-img :src=url class="rounded-0"></b-card-img>
+            </b-col>
+            <b-col md="6">
+                <b-card-body title="Horizontal Card">
+                    <b-card-text>
+                        This is a wider card with supporting text as a natural lead-in to additional content.
+                        This content is a little bit longer.
+                    </b-card-text>
+                </b-card-body>
+            </b-col>
+        </b-row>
+    </b-card>
 </template>
 
 <script>
@@ -35,6 +21,11 @@
         name: 'ListItem',
         props: {
             item: Array,
+        },
+        data() {
+            return {
+                url: "https://placekitten.com/" + (Math.floor(Math.random() * 10) + 600)  + "/400/"
+            }
         }
     };
 </script>

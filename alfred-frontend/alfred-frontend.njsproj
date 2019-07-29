@@ -39,6 +39,7 @@
     <Content Include="axios.map" />
     <Content Include="axios.min.js" />
     <Content Include="axios.min.map" />
+    <Content Include="src\client.js" />
     <Content Include="src\router.js" />
     <Content Include="src\store.js" />
     <Content Include="src\views\Results.vue" />

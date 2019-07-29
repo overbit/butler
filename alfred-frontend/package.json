@@ -17,9 +17,10 @@
     "bootstrap-vue": "^2.0.0-rc.26",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
+    "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.3",
-    "vuex": "^3.0.1",
-    "vue-simple-search-dropdown": "^1.0.1"
+    "vue-simple-search-dropdown": "^1.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.8.0",
