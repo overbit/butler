@@ -43,6 +43,10 @@ export default {
         return list;
     },
     async products(req) {
-        return await this.api('/alfred/product', req);
+        let response = await this.api('/alfred/product', req);
+        if (response) {
+            return response.data;
+        }
+
     }
 }

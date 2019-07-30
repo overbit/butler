@@ -74,28 +74,32 @@
                 this.buttonDisabled = true;
                 /* eslint-disable no-console */
                 if (!sel.id && !sel.customOption) {
+                    this.buttonDisabled = null;
                     return;
                 }
 
                 let that = this;
-                let modCategory = that.facetCategoryList.filter(function (item) { return item.Name === sel.category })[0];
-                let modIndex = that.facetCategoryList.indexOf(modCategory);
-
+                
                 that.selectedFacets[sel.category] = sel.id;
 
                 let updatedList = await client.facets(that.selectedFacets);
-                
-                for (let i = modIndex + 1; i < that.facetCategoryList.length; i++) {
-                    let item = that.facetCategoryList[i];
-                    if (item.Name != modCategory.Name) {
-                        let newVal = updatedList.filter(function (i) { return i.Name === item.Name })[0];
-                        // Workaround due to limitations in JavaScript. https://vuejs.org/v2/guide/list.html#Caveats
-                        that.facetCategoryList.splice(i, 1, newVal);
-                        item = that.facetCategoryList[i];
 
-                        that.mapFacetOptions(item);
-                    }
+                for (let i = 0; i < that.facetCategoryList.length; i++) {
+                    let item = that.facetCategoryList[i];
+                    
+                    let newVal = updatedList.filter(function (i) { return i.Name === item.Name })[0];
+
+                    // Workaround due to limitations in JavaScript. https://vuejs.org/v2/guide/list.html#Caveats
+                    that.facetCategoryList.splice(i, 1, newVal);
+                    item = that.facetCategoryList[i];
+                    that.mapFacetOptions(item);
                 }
+                
+                for (let i = that.facetCategoryList.length - 1; i >= 0; i--) {
+                    if (that.facetCategoryList[i].remove)
+                        that.facetCategoryList.pop();
+                }
+
                 this.buttonDisabled = null;
             },
             mapFacetOptions(fc) {
