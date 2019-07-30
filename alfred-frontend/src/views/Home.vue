@@ -5,6 +5,7 @@
                 <FacetCategory v-for="fc in facetCategoryList"
                                v-bind:facetCategory="fc"
                                v-bind:selectedFacets="selectedFacets"
+                               v-bind:disabled="buttonDisabled"
                                v-bind:key="fc.id"
                                v-on:new-selection="updateFacetCategoryList"
                                v-on:new-custom-option="updatedCustomOption" />
@@ -89,10 +90,17 @@
                     
                     let newVal = updatedList.filter(function (i) { return i.Name === item.Name })[0];
 
-                    // Workaround due to limitations in JavaScript. https://vuejs.org/v2/guide/list.html#Caveats
-                    that.facetCategoryList.splice(i, 1, newVal);
-                    item = that.facetCategoryList[i];
-                    that.mapFacetOptions(item);
+                    if (newVal) {
+                        // Workaround due to limitations in JavaScript. https://vuejs.org/v2/guide/list.html#Caveats
+                        that.facetCategoryList.splice(i, 1, newVal);
+                        item = that.facetCategoryList[i];
+                        that.mapFacetOptions(item);
+                    }
+                    else {
+                        newVal = item;
+                        newVal.disabled = true;
+                        that.facetCategoryList.splice(i, 1, newVal);
+                    }
                 }
                 
                 for (let i = that.facetCategoryList.length - 1; i >= 0; i--) {

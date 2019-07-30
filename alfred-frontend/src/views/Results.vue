@@ -1,7 +1,10 @@
 <template>
     <div class="results">
-        <h1>This is an about page</h1>
-
+        <h4>Search results</h4>
+        <b-button block 
+                  variant="outline-primary" 
+                  v-on:click="gotoPWS"
+                  v-show="results && results.length > 0"> Search</b-button>
         <ListItem v-for="item in results"
                   v-bind:item="item"
                   v-bind:key="item.id" />
@@ -22,29 +25,41 @@
         },
         data() {
             return {
-                results : []
+                results: Array
             }
         },
         components: {
             ListItem
         },
         methods: {
-            async getResult() {
-                this.results = await client.products(this.selectedFacets);
+            gotoPWS() {
+                let that = this;
+                window.location.href = "http://dev.abcam.com/products?"
+                + "keywords=" + that.searchKeyword
+                + "&selected.targetName=" +  that.selectedFacets["TargetName"] 
+                + "&selected.application=" + that.selectedFacets["Application"] 
+                + "&selected.hostSpecies=" + that.selectedFacets["HostSpecies"] 
+                + "&selected.reactivity=" + that.selectedFacets["Reactivity"] ;
             }
         },
-        created() { 
+        async created() { 
             let that = this;
             that.selectedFacets = that.$attrs.selectedFacets;
             that.searchKeyword = that.$attrs.searchKeyword;
+            
+            /* eslint-disable no-console */
+ 
+            let res = await client.products(this.selectedFacets);
 
-            that.getResult();
-            //window.location.href = "http://dev.abcam.com/products?"
-            //+ "keywords=" + that.searchKeyword
-            //+ "&selected.targetName=" +  that.selectedFacets["TargetName"] 
-            //+ "&selected.application=" + that.selectedFacets["Application"] 
-            //+ "&selected.hostSpecies=" + that.selectedFacets["HostSpecies"] 
-            //+ "&selected.reactivity=" + that.selectedFacets["Reactivity"] ;
+            if (res && res["products"]) {
+                that.results= res["products"].map(function (item) {
+                    return item.productIndexModel;
+                })
+            }
+            else
+                that.results = [];
+
+            console.log("that.results", that.results);
         }
     }
 </script>

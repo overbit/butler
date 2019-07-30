@@ -7,8 +7,9 @@
             <Dropdown :options=facetCategory.FacetOptions
                         :name=categoryName
                         :maxItem=maxDropdownItems
+                        :disabled="disabled || facetCategory.disabled"
                         v-on:selected="saveSelection"
-                        placeholder="Please select an option">
+                        :placeholder="getPlaceholder()">
             </Dropdown>
         </div>
         <div v-if="facetCategory.Name === 'TargetName'" class="col-sm-6"  >
@@ -30,6 +31,7 @@
             Dropdown
         },
         props: {
+            disabled: Boolean,
             facetCategory: Object,
             selectedFacets: Object
             },
@@ -42,7 +44,8 @@
                 customOption: null,
                 categoryName: this.facetCategory.Name,
                 maxDropdownItems: this.facetCategory.Facets.length,
-                selectedFacet: String
+                selectedFacet: String,
+                placeholder: String
             }
         },
         methods: {
@@ -61,9 +64,15 @@
             //confirmSelection() { 
             //    this.$emit('new-selection', this.selectedFacet);
             //}
+            , getPlaceholder() {
+                if (this.facetCategory.disabled)
+                    return "No futher options available";
+                else
+                    return "Please select an option";
+            }
         },
         //created() {
-        //    console.log({ created: this });
+
         //},
         //mounted() {
         //    console.log({ mounted: this });

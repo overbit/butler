@@ -4,6 +4,9 @@ export default {
     /*--------Ajax--------*/
     async api(url, req) {
         /* eslint-disable no-console */
+        let urlLog = "alfred-request " + url;
+        console.log(urlLog, req);
+
         return await axios.post(url, req)
             .catch(function (error) {
                 if (error.response) {
@@ -45,6 +48,8 @@ export default {
     async products(req) {
         let response = await this.api('/alfred/product', req);
         if (response) {
+            console.log({ "alfred-response": response.data });
+
             return response.data;
         }
 
