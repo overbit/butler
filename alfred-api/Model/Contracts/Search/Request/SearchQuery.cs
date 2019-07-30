@@ -11,10 +11,10 @@ namespace alfred_api.Model.Contracts.Search.Request
         public string Application { get; set; }
 
         [JsonProperty("selected.hostSpecies")]
-        public string Reactivity { get; set; }
+        public string HostSpecies { get; set; }
 
         [JsonProperty("selected.reactivity")]
-        public string HostSpecies { get; set; }
+        public string Reactivity { get; set; }
 
         [JsonProperty("PageSize")]
         public int PageSize { get; set; }
