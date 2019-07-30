@@ -12,11 +12,10 @@
                         :placeholder="getPlaceholder()">
             </Dropdown>
         </div>
-        <div v-if="facetCategory.Name === 'TargetName'" class="col-sm-6"  >
+        <!--<div v-if="facetCategory.Name === 'TargetName'" class="col-sm-6"  >
             If you cannot find the target add it here:
             <input v-model="customOption" placeholder="p53" @input="updatedCustomOption" />
-        </div>
-        <!--<b-button v-on:click="confirmSelection">Confirm</b-button>-->
+        </div>-->
     </div>
 
 </template>

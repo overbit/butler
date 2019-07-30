@@ -16,6 +16,9 @@ namespace alfred_api.Model.Contracts.Search.Request
         [JsonProperty("selected.reactivity")]
         public string Reactivity { get; set; }
 
+        [JsonProperty("keywords")]
+        public string Keyword{ get; set; }
+
         [JsonProperty("PageSize")]
         public int PageSize { get; set; }
         [JsonProperty("PageNumber")]

@@ -2,7 +2,11 @@
 
 export default {
     /*--------Ajax--------*/
-    async api(url, req) {
+    async api(url, req, params) {
+
+        if (params)
+            url += '?' + params;
+
         /* eslint-disable no-console */
         let urlLog = "alfred-request " + url;
         console.log(urlLog, req);
@@ -45,8 +49,10 @@ export default {
         }
         return list;
     },
-    async products(req) {
-        let response = await this.api('/alfred/product', req);
+    async products(req, page, size) {
+        let params = "size=" + size + "&page=" + page;
+
+        let response = await this.api('/alfred/product', req, params);
         if (response) {
             console.log({ "alfred-response": response.data });
 

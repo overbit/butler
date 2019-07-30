@@ -12,5 +12,8 @@ namespace alfred_api.Model.Dtos.Search.Request
         public string Reactivity { get; set; }
         [FromBody]
         public string HostSpecies { get; set; }
+
+        [FromBody]
+        public string Keyword { get; set; }
     }
 }

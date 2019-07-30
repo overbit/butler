@@ -8,10 +8,9 @@
                 <b-card-body :title=item.productNameHtml>
                     <b-card-text>
                         <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
-                        <p><strong>Application</strong>: <span v-html="item.applications"></span></p>
+                        <p><strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></p>
                         <p><strong>Reactivity</strong>: {{item.Reactivity}}</p>
                         <p v-show="item.conjugate"><strong>Conjugation</strong>: {{item.conjugate}}</p>
-                        <p v-show="assayType"><strong>Assay type</strong>: {{item.assayType}}</p>
                         <p><strong>Alternative Names</strong>: {{item.AlternativeNames}}</p>
                     </b-card-text>
                 </b-card-body>
@@ -36,6 +35,9 @@
         },
         methods: {
             getApplications(list) {
+                if (!list) {
+                    return;
+                }
                 let res = [];
                 for (let i = 0; i < list.length; i++) {
                     let curr = list[i];
@@ -50,6 +52,9 @@
                   return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
             },
             listToString(l) {
+                if (!l) {
+                    return;
+                }
                 let r = "";
                 for (let i = 0; i < l.length; i++) {
                     r += l[i];
@@ -60,17 +65,20 @@
             }
         },
         created() {
-            /* eslint-disable no-console */
-            console.log("item", this.item);
-            console.log("this.item.Application", );
-
+        /* eslint-disable no-console */
+            //Default
             this.url = "https://placekitten.com/" + (Math.floor(Math.random() * 10) + 600) + "/400/";
-            if (this.item.images[0])
-                this.url =  "https://bau-ci.abcam.com"+this.item.images[0];
+            if (this.item) {
+                if (this.item.images )
+                    this.url =  "https://bau-ci.abcam.com"+this.item.images[0];
 
-            this.item.applications = this.listToString(this.getApplications(this.item["application"]));
-            this.item.Reactivity = this.listToString(this.item["reactivity"]);
-            this.item.AlternativeNames = this.listToString(this.item["alternativeName"]);
+                this.applications = this.listToString(this.getApplications(this.item["application"]));
+
+                this.item.Reactivity = this.listToString(this.item["reactivity"]);
+
+                this.item.AlternativeNames = this.listToString(this.item["alternativeName"]);
+                }
+
         },
         mounted() {
 
