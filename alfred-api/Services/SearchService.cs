@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using alfred_api.Config;
@@ -64,26 +63,7 @@ namespace alfred_api.Services
             var queryStringParams = jsObj.Children().Cast<JProperty>()
                 .Where(property => !string.IsNullOrWhiteSpace(property.Value.ToString()))
                 .Select(jp => new Tuple<string,string>( jp.Name, HttpUtility.UrlEncode(jp.Value.ToString())));
-
-//            var queryStringParams = new Dictionary<string, string>();
-//
-//            if (!string.IsNullOrWhiteSpace(queryObj.TargetName))
-//            {
-//                queryStringParams.Add("selected.targetName", queryObj.TargetName);
-//            }
-//            if (!string.IsNullOrWhiteSpace(queryObj.Application))
-//            {
-//                queryStringParams.Add("selected.application", queryObj.Application);
-//            }
-//            if (!string.IsNullOrWhiteSpace(queryObj.Reactivity))
-//            {
-//                queryStringParams.Add("selected.reactivity", queryObj.Reactivity);
-//            }
-//            if (!string.IsNullOrWhiteSpace(queryObj.HostSpecies))
-//            {
-//                queryStringParams.Add("selected.hostSpecies", queryObj.HostSpecies);
-//            }
-            return queryStringParams.ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2); ;
+            return queryStringParams.ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
         }
     }
 }
