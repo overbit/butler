@@ -1,17 +1,24 @@
 <template>
-    <b-card no-body class="overflow-hidden" style="font-size: smaller;">
+    <b-card no-body class="overflow-hidden" border-variant="success">
         <b-row no-gutters>
             <b-col md="2">
-                <b-card-img-lazy :src=url class="rounded-0" style=""></b-card-img-lazy>
+                <b-card-img-lazy :src=url class="rounded-0" v-show="url != ''"></b-card-img-lazy>
             </b-col> 
-            <b-col md="6">
+            <b-col>
                 <b-card-body :title=item.productNameHtml>
+                    <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
                     <b-card-text>
-                        <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
-                        <p><strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></p>
-                        <p><strong>Reactivity</strong>: {{item.Reactivity}}</p>
-                        <p v-show="item.conjugate"><strong>Conjugation</strong>: {{item.conjugate}}</p>
-                        <p><strong>Alternative Names</strong>: {{item.AlternativeNames}}</p>
+                        <b-row no-gutters> 
+                            <b-col>
+                                <p><strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></p>
+                                <p><strong>Reactivity</strong>: {{item.Reactivity}}</p>
+                                <p v-show="item.conjugate"><strong>Conjugation</strong>: {{item.conjugate}}</p>
+                                <p v-show="item.SampleType"><strong>SampleType</strong>: {{item.SampleType}}</p>
+                            </b-col>
+                            <b-col>
+                                <p><strong>Alternative Names</strong>: {{item.AlternativeNames}}</p>
+                            </b-col>
+                        </b-row>
                     </b-card-text>
                 </b-card-body>
             </b-col>
@@ -67,9 +74,10 @@
         created() {
         /* eslint-disable no-console */
             //Default
-            this.url = "https://placekitten.com/" + (Math.floor(Math.random() * 10) + 600) + "/400/";
+            this.url = "";
+            console.log(this.item);
             if (this.item) {
-                if (this.item.images )
+                if (this.item.images)
                     this.url =  "https://bau-ci.abcam.com"+this.item.images[0];
 
                 this.applications = this.listToString(this.getApplications(this.item["application"]));
@@ -77,8 +85,9 @@
                 this.item.Reactivity = this.listToString(this.item["reactivity"]);
 
                 this.item.AlternativeNames = this.listToString(this.item["alternativeName"]);
-                }
 
+                this.item.SampleType = this.listToString(this.item["SampleType"]);
+            }
         },
         mounted() {
 
@@ -89,8 +98,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .card-img {
-    width: 100%;
-    height: 15vw;
-    object-fit: cover;
+    /* width: 100%;
+    height: 12vw; */
+    object-fit: scale-down;
+}
+.card-body{
+    padding-top: 0;
+    padding-bottom: 0;
 }
 </style>

@@ -1,13 +1,22 @@
 <template>
     <div class="results">
-        <h4>Search results</h4>
-        <b-button variant="outline-primary"
-                  v-on:click="gotoPWS"
-                  v-show="items && items.length > 0"
-                  style="margin-top:2em">Search on abcam.com</b-button>
+             <b-row align-h="start">
+                 <b-col><h4>Search results</h4></b-col>
+                 <b-col>
+                     <b-button variant="outline-primary"
+                               v-on:click="gotoHome">Start again</b-button>
+                  </b-col>
+                <b-col>
+                     <b-button variant="outline-secondary" 
+                               v-on:click="gotoPWS">Search on abcam.com</b-button>
+                  </b-col>
+             </b-row>
+       
+        
         <ListItem v-for="item in items"
                   v-bind:item="item"
-                  v-bind:key="item.productCode" />
+                  v-bind:key="item.productCode" 
+                  v-show="items.length > 0"/>
         <b-row align-h="center">
             <b-button v-on:click="loadMore"
                       v-show="items && items.length > 0"
@@ -47,6 +56,9 @@
                 + "&selected.application=" + that.selectedFacets["Application"] 
                 + "&selected.hostSpecies=" + that.selectedFacets["HostSpecies"] 
                 + "&selected.reactivity=" + that.selectedFacets["Reactivity"] ;
+            },
+            gotoHome() {
+                this.$router.push('/');
             },
             async loadMore() {
             /* eslint-disable no-console */

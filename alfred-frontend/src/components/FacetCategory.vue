@@ -12,16 +12,12 @@
                         :placeholder="getPlaceholder()">
             </Dropdown>
         </div>
-        <!--<div v-if="facetCategory.Name === 'TargetName'" class="col-sm-6"  >
-            If you cannot find the target add it here:
-            <input v-model="customOption" placeholder="p53" @input="updatedCustomOption" />
-        </div>-->
     </div>
 
 </template>
 
 <script>
-    import Dropdown from 'vue-simple-search-dropdown';
+    import Dropdown from '@/components/Dropdown.vue';
     import { String } from 'core-js';
 
     export default {

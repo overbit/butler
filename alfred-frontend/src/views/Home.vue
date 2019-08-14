@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <h1>Alfred, at your service Master Bruce</h1>
+        <h1>Alfred, at your service Master Bruce!</h1>
         <div id="search-form container">
                 <FacetCategory v-for="fc in facetCategoryList"
                                v-bind:facetCategory="fc"
@@ -10,9 +10,11 @@
                                v-on:new-selection="updateFacetCategoryList"
                                v-on:new-custom-option="updatedCustomOption" />
                 <b-row>
-                    <b-col></b-col>
                     <b-col cols="3">
-                        <b-button block variant="outline-primary" v-on:click="search"  :disabled="!!buttonDisabled">Search</b-button>
+                        <b-button block variant="" v-on:click="resetSelection">Reset</b-button>
+                    </b-col>
+                    <b-col cols="3">
+                        <b-button block variant="success" v-on:click="search" :disabled="!!buttonDisabled">Search</b-button>
                     </b-col>
                     <b-col></b-col>
                 </b-row>
@@ -61,12 +63,15 @@
             }
         },
         methods: {
+            resetSelection() {
+                this.$router.go();
+            },
             search() {
                 /* eslint-disable no-console */
                 
                 let that = this;
                 let params = { searchKeyword: that.searchKeyword, selectedFacets: that.selectedFacets };
-                this.$router.push({ name: 'results', params: params })
+                this.$router.push({ name: 'results', params: params });
             },
             updatedCustomOption(sel){
                 this.searchKeyword = sel;
@@ -112,7 +117,7 @@
             },
             mapFacetOptions(fc) {
                 fc.FacetOptions = fc.Facets.map(function (item) {
-                    let value = item.name + '   ' + item.count ;
+                    let value = item.name + ' (' + item.count +')';
                     return { id: item.name, name: value }
                 })
             }
