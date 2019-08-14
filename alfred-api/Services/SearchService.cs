@@ -62,7 +62,7 @@ namespace alfred_api.Services
             var jsObj = (JObject)JsonConvert.DeserializeObject(json);
             var queryStringParams = jsObj.Children().Cast<JProperty>()
                 .Where(property => !string.IsNullOrWhiteSpace(property.Value.ToString()))
-                .Select(jp => new Tuple<string,string>( jp.Name, HttpUtility.UrlEncode(jp.Value.ToString())));
+                .Select(jp => new Tuple<string,string>( jp.Name, jp.Value.ToString()));
             return queryStringParams.ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
         }
     }

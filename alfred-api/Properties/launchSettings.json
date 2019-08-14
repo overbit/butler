@@ -28,6 +28,16 @@
       "httpPort": 61070,
       "useSSL": true,
       "sslPort": 44385
+    },
+    "Kestrel": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/alfred",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "url__search" : "http://dev.abcam.com"
+      },
+      "applicationUrl": "https://localhost:44384/"
     }
   }
 }

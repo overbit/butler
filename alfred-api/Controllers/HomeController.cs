@@ -32,7 +32,7 @@ namespace alfred_api.Controllers
 
 
         [HttpPost("facet")]
-        public async Task<ActionResult<string>> Facet(FacetQueryDto dto)
+        public async Task<ActionResult> Facet(FacetQueryDto dto)
         {
             var facetRequired = dto.RequiredFacets;
             var searchQuery = mapper.Map<SearchQuery>((SearchQueryDto)dto);
@@ -50,7 +50,7 @@ namespace alfred_api.Controllers
         }
 
         [HttpPost("product")]
-        public async Task<ActionResult<string>> Product(SearchQueryDto dto,[FromQuery] int size = 0, [FromQuery] int page = 1)
+        public async Task<ActionResult> Product(SearchQueryDto dto,[FromQuery] int size = 0, [FromQuery] int page = 1)
         {
             var searchQuery = mapper.Map<SearchQuery>(dto);
 
