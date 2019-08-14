@@ -3,7 +3,7 @@
 ## Run in Kestrel and nodejs 
 
 ```bash
-./startLocal.sh
+./run-KestrelNode.sh
 ```
 
 ## Run in containers with kubernetes (minikube) 
