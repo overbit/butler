@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
       # API
-      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-api:latest
+      - image:  alfred-api:latest
+        imagePullPolicy: Never
         name:  alfred-api
         livenessProbe:
           httpGet:
@@ -40,13 +41,14 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: urls__search
-          value: http://172.29.57.49
+          value: http://dev.abcam.com
         ports:
         - containerPort: 80
           name: http
           protocol: TCP
       # Frontend
-      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-frontend:latest
+      - image:  alfred-frontend:latest
+        imagePullPolicy: Never
         name:  alfred-frontend
         ports:
         - containerPort: 8080
