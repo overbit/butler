@@ -13,8 +13,8 @@ spec:
         - path: /
           backend:
             serviceName: alfred-frontend
-            servicePort: 80
+            servicePort: 8081
         - path: /api/
           backend:
             serviceName: alfred-api
-            servicePort: 80
+            servicePort: 8082
