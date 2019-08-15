@@ -31,9 +31,9 @@ With PowerShell, there is an additional step. You must ensure Get-ExecutionPolic
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 ```
 
-Install minikube 
-```bash 
+#### Install minikube
 
+```bash
 choco install minikube
 ```
 

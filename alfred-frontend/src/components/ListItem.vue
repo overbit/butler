@@ -1,29 +1,23 @@
 <template>
-    <b-card no-body class="overflow-hidden" border-variant="success">
-        <b-row no-gutters>
-            <b-col md="2">
-                <b-card-img-lazy :src=url class="rounded-0" v-show="url != ''"></b-card-img-lazy>
-            </b-col> 
-            <b-col>
-                <b-card-body :title=item.productNameHtml>
-                    <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
-                    <b-card-text>
-                        <b-row no-gutters> 
-                            <b-col>
-                                <p><strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></p>
-                                <p><strong>Reactivity</strong>: {{item.Reactivity}}</p>
-                                <p v-show="item.conjugate"><strong>Conjugation</strong>: {{item.conjugate}}</p>
-                                <p v-show="item.SampleType"><strong>SampleType</strong>: {{item.SampleType}}</p>
-                            </b-col>
-                            <b-col>
-                                <p><strong>Alternative Names</strong>: {{item.AlternativeNames}}</p>
-                            </b-col>
-                        </b-row>
-                    </b-card-text>
-                </b-card-body>
-            </b-col>
-        </b-row>
+    <b-col md-12>
+    <b-card no-body class="overflow-hidden mb-4" border-variant="success" >
+
+        <b-card-img-lazy :src=url class="img-top card-img" v-show="url != ''"></b-card-img-lazy>
+        <b-card-body :title=item.productNameHtml>
+            <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
+            <b-card-text>
+              
+                        <p><strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></p>
+                        <p><strong>Reactivity</strong>: {{item.Reactivity}}</p>
+                        <p v-show="item.conjugate"><strong>Conjugation</strong>: {{item.conjugate}}</p>
+                        <p v-show="item.SampleType"><strong>SampleType</strong>: {{item.SampleType}}</p>
+                        <p><strong>Alternative Names</strong>: {{item.AlternativeNames}}</p>
+                   
+            </b-card-text>
+        </b-card-body>
+
     </b-card>
+    </b-col>
 </template>
 
 <script>
@@ -49,14 +43,21 @@
                 for (let i = 0; i < list.length; i++) {
                     let curr = list[i];
                     let hash = this.getHashForString(curr);
-                    let appVariant = this.applicationVariants[hash % 7];
+                    let appVariant = this.applicationVariants[Math.abs(hash) % 7]; 
 
                     res.push("<span class='badge badge-" + appVariant + "'>"+curr+"</span>")
                 }
                 return res;
             },
             getHashForString(s){
-                  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+                var hash = 0, i, chr;
+                if (s.length === 0) return hash;
+                    for (i = 0; i < s.length; i++) {
+                        chr   = s.charCodeAt(i);
+                        hash  = ((hash << 5) - hash) + chr;
+                        hash |= 0; // Convert to 32bit integer
+                    }
+                return hash;    
             },
             listToString(l) {
                 if (!l) {
@@ -98,8 +99,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .card-img {
-    /* width: 100%;
-    height: 12vw; */
+    /* width: 100%; */
+    height: 15vw; 
+    padding: 1rem;
     object-fit: scale-down;
 }
 .card-body{

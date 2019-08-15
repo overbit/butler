@@ -1,5 +1,5 @@
 <template>
-    <div class="facet-category row" v-if="facetCategory.FacetOptions.length > 0">
+    <div class="row justify-content-md-center" v-if="facetCategory.FacetOptions.length > 0">
         <div class="col-sm-2">
             <h5>{{facetCategory.Name}}</h5>
         </div>

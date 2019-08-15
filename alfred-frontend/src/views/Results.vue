@@ -1,22 +1,27 @@
 <template>
-    <div class="results">
-             <b-row align-h="start">
-                 <b-col><h4>Search results</h4></b-col>
-                 <b-col>
-                     <b-button variant="outline-primary"
-                               v-on:click="gotoHome">Start again</b-button>
-                  </b-col>
-                <b-col>
-                     <b-button variant="outline-secondary" 
-                               v-on:click="gotoPWS">Search on abcam.com</b-button>
-                  </b-col>
-             </b-row>
-       
+    <div class="section section-invert clearfix">
+        <h2 class="section-title text-center m-5">Search results</h2>
+        <div class="text-center m-5">
+    
+            <b-button variant="outline-primary"
+                    v-on:click="gotoHome">
+                    Start again
+            </b-button>
+
+            <b-button variant="outline-secondary" 
+                    v-on:click="gotoPWS">
+                    Search on abcam.com
+            </b-button>
+    
+        </div>
         
-        <ListItem v-for="item in items"
+        <div class="card-deck">
+        <ListItem class="col-md-12 col-lg-4" v-for="item in items"
                   v-bind:item="item"
                   v-bind:key="item.productCode" 
                   v-show="items.length > 0"/>
+        </div>  
+
         <b-row align-h="center">
             <b-button v-on:click="loadMore"
                       v-show="items && items.length > 0"
@@ -41,7 +46,7 @@
             return {
                 items: Array,
                 page: Number,
-                size: 2
+                size: 3
             }
         },
         components: {
@@ -96,3 +101,12 @@
         }
     }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.btn {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+</style>

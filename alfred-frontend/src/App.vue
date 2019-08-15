@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-         <!--<div id="nav">
+    <div id="app" class="shards-landing-page--1">
+        <!--<div id="nav">
             <router-link to="/">Search</router-link> |
             <router-link to="/results">Results</router-link>
         </div>-->
@@ -22,12 +22,15 @@
         padding: 30px;
     }
 
-        #nav a {
-            font-weight: bold;
-            color: #2c3e50;
-        }
+    #nav a {
+        font-weight: bold;
+        color: #2c3e50;
+    }
 
-            #nav a.router-link-exact-active {
-                color: #42b983;
-            }
+    #nav a.router-link-exact-active {
+        color: #42b983;
+    }
+    @import url(./assets/shards.min.css);
+    @import url(./assets/shards-demo.min.css);
+    @import url(./assets/shards-extras.min.css);
 </style>

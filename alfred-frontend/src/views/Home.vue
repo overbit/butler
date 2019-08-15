@@ -1,25 +1,25 @@
 <template>
-    <div class="home">
-        <h1>Alfred, at your service Master Bruce!</h1>
-        <div id="search-form container">
-                <FacetCategory v-for="fc in facetCategoryList"
+    <div class="section section-invert">
+        <h2 class="section-title text-center m-5">Alfred here Sir, at your service</h2>
+        <b-container class="py-4" id="search-form">
+   
+                <FacetCategory class="py-1" v-for="fc in facetCategoryList"
                                v-bind:facetCategory="fc"
                                v-bind:selectedFacets="selectedFacets"
                                v-bind:disabled="buttonDisabled"
                                v-bind:key="fc.id"
                                v-on:new-selection="updateFacetCategoryList"
                                v-on:new-custom-option="updatedCustomOption" />
-                <b-row>
+                <b-row class="py-4 justify-content-md-center">
                     <b-col cols="3">
                         <b-button block variant="" v-on:click="resetSelection">Reset</b-button>
                     </b-col>
                     <b-col cols="3">
                         <b-button block variant="success" v-on:click="search" :disabled="!!buttonDisabled">Search</b-button>
                     </b-col>
-                    <b-col></b-col>
-                </b-row>
-        </div>
-      
+                </b-row>  
+        
+        </b-container>
         <div v-if="error && error.response && error.request"> 
             <p> <strong>Request</strong><br>
                 Url: {{ error.request.url}}<br>
@@ -133,10 +133,5 @@
 </script>
 
 <style>
-    .home{
-        max-width:1000px;
-    }
-    div{
-        margin-top:0.5em;
-    }
+#search-form{justify-content:flex-end}
 </style>
