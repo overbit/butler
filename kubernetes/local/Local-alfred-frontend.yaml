@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    DeploymentName: alfred-frontend
+  name: alfred-frontend
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      DeploymentName: alfred-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        DeploymentName:  alfred-frontend
+    spec:
+      containers:
+      # Frontend
+      - image:  alfred-frontend:latest
+        imagePullPolicy: Never
+        name:  alfred-frontend
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    DeploymentName: alfred-frontend
+  name: alfred-frontend
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: http 
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    DeploymentName: alfred-frontend
+  sessionAffinity: None
+  type: LoadBalancer
