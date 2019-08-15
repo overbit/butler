@@ -78,8 +78,8 @@
             this.url = "";
             console.log(this.item);
             if (this.item) {
-                if (this.item.images)
-                    this.url =  "https://p2-ci.abcam.com" + this.item.images[0];
+                if (this.item.images.length > 0)
+                    this.url =  "https://www.abcam.com" + this.item.images[0];
 
                 this.applications = this.listToString(this.getApplications(this.item["application"]));
 

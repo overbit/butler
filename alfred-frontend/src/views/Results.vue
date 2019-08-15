@@ -55,7 +55,7 @@
         methods: {
             gotoPWS() {
                 let that = this;
-                window.location.href = "http://dev.abcam.com/products?"
+                window.location.href = "http://www.abcam.com/products?"
                 + "keywords=" + that.searchKeyword
                 + "&selected.targetName=" +  that.selectedFacets["TargetName"] 
                 + "&selected.application=" + that.selectedFacets["Application"] 
