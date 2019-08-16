@@ -2,15 +2,15 @@
 
 To run alfred locally you can use Kestrel and nodejs or Kubernetes (minikube)
 
-## Run in Kestrel and nodejs 
+## Run in Kestrel and nodejs
 
 ```bash
 ./run-KestrelNode.sh
 ```
 
-## Run in containers with kubernetes (minikube)
+## Run in containers with Kubernetes (minikube)
 
-### Prep
+### Prep work
 
 #### Install Chocolatey
 

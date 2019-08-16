@@ -24,7 +24,7 @@
 
         <b-row align-h="center">
             <b-button v-on:click="loadMore"
-                      v-show="items && items.length > 0"
+                      v-show="items && items.length > 0 && showMoreButton()"
                       style="margin-top:2em">Load more</b-button>
         </b-row>
     </div>
@@ -46,7 +46,8 @@
             return {
                 items: Array,
                 page: Number,
-                size: 3
+                size: 3,
+                totalItems: 0
             }
         },
         components: {
@@ -92,13 +93,22 @@
                         return item.productIndexModel;
                     })
                 }
+
+                this.totalItems = res["totalItems"];
                 return results;
+            },
+            showMoreButton(){
+                let currResultsDisplayed = this.page * this.size;
+                if(currResultsDisplayed >= this.totalItems){
+                    return false;
+                }
+                return true;
             }
         },
         async created() { 
             this.page = 1;
             this.items = await this.getResults();
-        }
+        },
     }
 </script>
 

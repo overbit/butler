@@ -106,7 +106,7 @@
           
             console.log(this.selected.name);
             console.log(this.searchFilter);
-        //this.$emit('selected', this.selected);
+        this.$emit('selected', this.selected);
         this.optionsShown = false;
       },
       // Selecting when pressing Enter

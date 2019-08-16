@@ -1,6 +1,6 @@
 <template>
     <div class="section section-invert">
-        <h2 class="section-title text-center m-5">Alfred here Sir, at your service</h2>
+        <h2 class="section-title text-center m-5">Fill the following and I'll do the rest</h2>
         <b-container class="py-4" id="search-form">
    
                 <FacetCategory class="py-1" v-for="fc in facetCategoryList"
@@ -10,7 +10,7 @@
                                v-bind:key="fc.id"
                                v-on:new-selection="updateFacetCategoryList"
                                v-on:new-custom-option="updatedCustomOption" />
-                <b-row class="py-4 justify-content-md-center">
+                <b-row class="py-4" align-h="center">
                     <b-col cols="3">
                         <b-button block variant="" v-on:click="resetSelection">Reset</b-button>
                     </b-col>
