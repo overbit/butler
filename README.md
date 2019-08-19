@@ -12,30 +12,7 @@ To run alfred locally you can use Kestrel and nodejs or Kubernetes (minikube)
 
 ### Prep work
 
-#### Install Chocolatey
-
-Install with cmd.exe
-Run the following command:   (copy command text)
-
-```cmd
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-```
-
-Install with PowerShell.exe
-With PowerShell, there is an additional step. You must ensure Get-ExecutionPolicy is not Restricted. We suggest using Bypass to bypass the policy to get things installed or AllSigned for quite a bit more security.
-
-- Run Get-ExecutionPolicy. If it returns Restricted, then run Set-ExecutionPolicy AllSigned or Set-ExecutionPolicy Bypass -Scope Process.
-- Now run the following command:   (copy command text)
-
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-```
-
-#### Install minikube
-
-```bash
-choco install minikube
-```
+[Install Docker CLI / K8s / ...](PREP-DEV-MACHINE.md)
 
 ### Use docker images in minikube
 
@@ -57,7 +34,7 @@ docker images -a
 minikube start
 ```
 
-### Enable the Ingress controller in minikube
+### Enable the Ingress controller in minikube - Only the first time
 
 ```bash
 # To enable the NGINX Ingress controller
