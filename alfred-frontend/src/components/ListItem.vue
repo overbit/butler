@@ -5,15 +5,21 @@
         <b-card-img-lazy :src=url class="img-top card-img" v-show="url != ''"></b-card-img-lazy>
         <b-card-body :title=item.productNameHtml>
             <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
-            <b-card-text>
-              
-                        <p><strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></p>
-                        <p><strong>Reactivity</strong>: {{item.Reactivity}}</p>
-                        <p v-show="item.conjugate"><strong>Conjugation</strong>: {{item.conjugate}}</p>
-                        <p v-show="item.SampleType"><strong>SampleType</strong>: {{item.SampleType}}</p>
-                        <p><strong>Alternative Names</strong>: {{item.AlternativeNames}}</p>
-                   
-            </b-card-text>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Application</strong>: <span v-html="applications" style="font-size:larger;"></span></li>
+                <li class="list-group-item" v-show="item.conjugate">
+                    <strong>Conjugation</strong>: {{item.conjugate}}</li>
+                <li class="list-group-item">
+                    <strong>Reactivity</strong>: {{item.Reactivity}}</li>
+                <li class="list-group-item" v-show="item.SampleType">
+                    <strong>SampleType</strong>: {{item.SampleType}}</li>
+                <li class="list-group-item">
+                    <strong>Alternative Names</strong>: {{item.AlternativeNames}}</li>
+            </ul>
+        </b-card-body>
+        <b-card-body>
+            <b-button class="float-right" variant="success" v-on:click="gotoDatasheet">Datasheet</b-button>
         </b-card-body>
 
     </b-card>
@@ -70,6 +76,9 @@
                         r+="  "
                 }
                 return r;
+            },
+            gotoDatasheet(){
+                window.location.href = "https://www.abcam.com/" + this.item["productCode"];
             }
         },
         created() {
@@ -103,9 +112,5 @@
     height: 15vw; 
     padding: 1rem;
     object-fit: scale-down;
-}
-.card-body{
-    padding-top: 0;
-    padding-bottom: 0;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="section section-invert clearfix">
+    <div>
         <h2 class="section-title text-center m-5">Search results</h2>
         <div class="text-center m-5">
     

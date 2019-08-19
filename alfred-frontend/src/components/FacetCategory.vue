@@ -1,9 +1,9 @@
 <template>
-    <b-row align-h="center" align-content="center" v-if="facetCategory.FacetOptions.length > 0">
-        <div class="col-md-2">
+    <b-row align-content="center" v-if="facetCategory.FacetOptions.length > 0">
+        <div class="col">
             <h5>{{facetCategory.Name}}</h5>
         </div>
-        <div class="col-md-3">
+        <div class="col">
             <Dropdown :options=facetCategory.FacetOptions
                         :name=categoryName
                         :maxItem=maxDropdownItems
