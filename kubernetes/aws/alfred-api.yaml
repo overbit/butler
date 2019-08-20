@@ -4,7 +4,7 @@ metadata:
   labels:
     DeploymentName: alfred-api
   name: alfred-api
-  namespace: default
+  namespace: octopus-deploy
 spec:
   replicas: 3
   selector:
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       # API
-      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-api:latest
+      - image:  693450038362.dkr.ecr.eu-west-1.amazonaws.com/alfred-api:[[buildnumber]]
         imagePullPolicy: Never
         name:  alfred-api
         livenessProbe:
