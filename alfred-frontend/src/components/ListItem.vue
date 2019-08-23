@@ -3,7 +3,7 @@
     <b-card no-body class="overflow-hidden mb-4" border-variant="success" >
 
         <b-card-img-lazy :src=url class="img-top card-img" v-show="url != ''"></b-card-img-lazy>
-        <b-card-body :title=item.productNameHtml>
+        <b-card-body :title="title">
             <p><strong>Description</strong>: {{item.productDescriptionHtml}}</p>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
@@ -14,7 +14,7 @@
                     <strong>Reactivity</strong>: {{item.Reactivity}}</li>
                 <li class="list-group-item" v-show="item.SampleType">
                     <strong>SampleType</strong>: {{item.SampleType}}</li>
-                <li class="list-group-item">
+                <li class="list-group-item text-truncate" :title=item.AlternativeNames>
                     <strong>Alternative Names</strong>: {{item.AlternativeNames}}</li>
             </ul>
         </b-card-body>
@@ -87,6 +87,8 @@
             this.url = "";
             console.log(this.item);
             if (this.item) {
+                
+                this.title = this.item.productNameHtml.concat(" [", this.item.productCode, "]");
                 if (this.item.images.length > 0)
                     this.url =  "https://www.abcam.com" + this.item.images[0];
 

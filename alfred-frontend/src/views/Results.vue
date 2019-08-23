@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="section">
         <h2 class="section-title text-center m-5">Search results</h2>
         <div class="text-center m-5">
     
@@ -118,5 +118,7 @@
     margin-left: 2rem;
     margin-right: 2rem;
 }
-
+.section{
+    padding: 0 20px 20px 20px;
+}
 </style>

@@ -38,7 +38,7 @@
       options: {
         type: Array,
         required: true,
-        default: [],
+        default: new Array(),
         note: 'Options of dropdown. An array of options with id and name',
       },
       placeholder: {
@@ -94,7 +94,7 @@
         if (!this.disabled) {
           this.searchFilter = '';
           this.optionsShown = true;
-        }
+        } 
       },
       exit() {
         if (!this.selected.id) {
@@ -102,10 +102,7 @@
             this.searchFilter = '';
         } else {
           this.searchFilter = this.selected.name;
-          }
-          
-            console.log(this.selected.name);
-            console.log(this.searchFilter);
+        }
         this.$emit('selected', this.selected);
         this.optionsShown = false;
       },
@@ -132,7 +129,7 @@
 <style lang="scss" scoped>
     .dropdown {
         position: relative;
-        display: block;
+        display: table;
         margin: auto;
         .dropdown-input
     {

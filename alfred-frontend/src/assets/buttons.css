@@ -1,0 +1,261 @@
+/*  Brought from jQuery UI  */
+
+/*  It's duplicated in CMS less-mixins.less, replicate changes in there  */
+
+.btn, .btn-primary {
+  border-radius: 2px;
+  border: 0 none;
+  display: inline-block;
+  padding: .615em .923em;
+  margin: 0;
+  line-height: 1.5em;
+  vertical-align: middle;
+  color: #fff;
+  background: #0047BB;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-size: 1.3rem;
+  transition: all 0.25s ease;
+}
+
+html.pws-mousedevice .btn:hover:not([disabled]) {
+  text-decoration: none;
+  background-color: #003B9E;
+}
+
+.btn:active:not([disabled]) {
+  color: #ccdaf1;
+  background-color: #002E7A;
+  transition: none;
+}
+
+.btn.btn-secondary {
+  background: #717c7d;
+}
+
+html.pws-mousedevice .btn.btn-secondary:hover:not([disabled]) {
+  background: #5E6768;
+}
+
+.btn.btn-secondary:active:not([disabled]) {
+  color: #e3e5e5;
+  background: #4F5757;
+}
+
+.btn.btn-link {
+  background: #eeefef;
+  color: #0047BB;
+}
+
+html.pws-mousedevice .btn.btn-link:hover:not([disabled]) {
+  background: #e6e8e8;
+}
+
+.btn.btn-link:active:not([disabled]) {
+  color: #0047BB;
+  background: #C9C9C9;
+}
+
+.btn.btn-outline-success {
+  color: #00BF6F;
+  border: 2px solid #00BF6F;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+}
+
+html.pws-mousedevice .btn.btn-outline-success:hover:not([disabled]) {
+  background: #00BF6F;
+  color: #fff;
+}
+
+.btn.btn-outline-success:active:not([disabled]) {
+  background: #00BF6F;
+  color: #fff;
+}
+
+.btn.btn-outline-success[disabled] {
+  cursor: default;
+  border: 1px solid #c7c7c7;
+  color: #919D9D;
+}
+
+.btn.btn-outline-primary {
+  color: #0047BB;
+  border: 2px solid #0047BB;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+}
+
+html.pws-mousedevice .btn.btn-outline-primary:hover:not([disabled]) {
+  background: #0047BB;
+}
+
+.btn.btn-outline-primary:active:not([disabled]) {
+  background: #0047BB;
+}
+
+.btn.btn-important, .btn.btn-success {
+  background: #00BF6F;
+}
+
+html.pws-mousedevice .btn.btn-important:hover:not([disabled]), html.pws-mousedevice .btn.btn-success:hover:not([disabled]) {
+  background: #00AA62;
+}
+
+.btn.btn-important:active:not([disabled]), .btn.btn-success:active:not([disabled]) {
+  color: #CCF2E2;
+  background: #009959;
+}
+
+.btn--large {
+  padding: .8em 1.8em;
+}
+
+.btn--xlarge {
+  padding: .8em 1.8em;
+  font-size: 1.5rem;
+}
+
+.btn--full-width {
+  width: 100%;
+  display: block;
+}
+
+.btn:disabled, .btn[disabled] {
+  color: #717c7d;
+  background: #e6e8e8;
+  cursor: default;
+}
+
+html.pws-mousedevice .btn--disabled:hover:not([disabled]), .btn--disabled:active:not([disabled]) {
+  color: #717c7d;
+  background: #e6e8e8;
+}
+
+.v3 .btn {
+  color: #fff;
+}
+
+.ie7 input.btn, .ie7 button.btn {
+  padding-top: .2em;
+  padding-bottom: .2em;
+  overflow: visible;
+}
+
+.action-btn {
+  cursor: pointer;
+  text-align: center;
+  background: #eeefef;
+  border-radius: 2px;
+  line-height: 3em;
+  font-size: 11px;
+  font-size: 1.1rem;
+  transition: all 0.25s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+html.pws-mousedevice .action-btn:not(.action-btn--disabled):hover {
+  background: #dedfdf;
+}
+
+html.pws-mousedevice .action-btn:not(.action-btn--disabled):active {
+  background: #C9C9C9;
+  transition: none;
+}
+
+.action-btn.load {
+  color: #003B9E;
+  font-size: 1em;
+  padding: 0 4.6em;
+}
+
+.action-btn--disabled {
+  cursor: default;
+}
+
+.action-btn__link {
+  color: #0047BB;
+}
+
+.symbol-btn {
+  box-sizing: border-box;
+  display: inline-block;
+  background: #fff;
+  color: #586061;
+  min-width: 2.4em;
+  border-radius: 2px;
+  border: 1px solid #c7c7c7;
+  padding: 0.5em 0.2em;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.symbol-btn:before {
+  font-family: 'Segoe UI Symbol';
+  position: absolute;
+  left: 0.9em;
+}
+
+html.pws-mousedevice .symbol-btn:hover {
+  text-decoration: none;
+  background: #dedfdf;
+}
+
+.disabled .symbol-btn {
+  border: 1px solid #c7c7c7;
+}
+
+.disabled .symbol-btn:before {
+  color: #c7c7c7;
+}
+
+.symbol-btn--right:before {
+  content: '❯';
+}
+
+.symbol-btn--left:before {
+  content: '❮';
+}
+
+.symbol-btn--up:before {
+  content: '❮';
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.symbol-btn--down:before {
+  content: '❯';
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.link-btn {
+  padding: 0;
+  background: none;
+  border: none;
+  color: #0047BB;
+  cursor: pointer;
+}
+
+html.pws-mousedevice .link-btn:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 481px) {
+  .pws-resp .action-btn {
+    border-radius: 0;
+    line-height: 3.5em;
+    height: 3.5em;
+  }
+}
+

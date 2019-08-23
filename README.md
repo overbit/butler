@@ -40,6 +40,9 @@ minikube start
 # To enable the NGINX Ingress controller
 minikube addons enable ingress
 
+# Add necessary resources
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+
 # Verify that the NGINX Ingress controller is running
 kubectl get pods -n kube-system
 ```

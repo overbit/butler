@@ -1,19 +1,20 @@
 <template>
-    <b-row align-content="center" v-if="facetCategory.FacetOptions.length > 0">
-        <div class="col">
-            <h5>{{facetCategory.Name}}</h5>
+    <div class="row text-nowrap align-items-center flex-wrap py-2">
+        <div class="col-md-5 text-center mx-auto">
+            <label class="col-form-label">
+                <h5>{{facetCategory.Name}}</h5>
+            </label>
         </div>
-        <div class="col">
-            <Dropdown :options=facetCategory.FacetOptions
-                        :name=categoryName
-                        :maxItem=maxDropdownItems
-                        :disabled="disabled || facetCategory.disabled"
-                        v-on:selected="saveSelection"
-                        :placeholder="getPlaceholder()">
+        <div class="col-md-7 col-lg-6 mx-auto">
+         <Dropdown  :options=facetCategory.FacetOptions
+                    :name=categoryName
+                    :maxItem=maxDropdownItems
+                    :disabled="disabled || facetCategory.disabled"
+                    v-on:selected="saveSelection"
+                    :placeholder="getPlaceholder()">
             </Dropdown>
         </div>
-    </b-row>
-
+    </div>
 </template>
 
 <script>
