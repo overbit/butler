@@ -47,6 +47,12 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/mast
 kubectl get pods -n kube-system
 ```
 
+### Create namespace for alfred nginx
+
+```bash
+kubectl create namespace development-nginx
+```
+
 ### Apply k8s deployment and services
 
 From the parent directory of the alfred repo and apply the local kubernetes configs.

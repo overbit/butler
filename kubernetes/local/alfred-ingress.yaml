@@ -2,19 +2,20 @@ apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/
 kind: Ingress
 metadata:
   name: alfred-ingress
+  namespace: development-nginx
   annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
 spec:
   rules:
     - host: dev.alfred
       http:
         paths:
-        - path: /
+        - path: /web/?(.*)
           backend:
             serviceName: alfred-frontend
             servicePort: 8081
-        - path: /api/
+        - path: /?(.*)
           backend:
             serviceName: alfred-api
             servicePort: 8082

@@ -4,9 +4,9 @@ metadata:
   labels:
     DeploymentName: alfred-api
   name: alfred-api
-  namespace: default
+  namespace: development-nginx
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       DeploymentName: alfred-api
@@ -53,7 +53,7 @@ metadata:
   labels:
     DeploymentName: alfred-api
   name: alfred-api
-  namespace: default
+  namespace: development-nginx
 spec:
   externalTrafficPolicy: Cluster
   ports:
