@@ -24,6 +24,7 @@
     @import url(./assets/shards-extras.min.css);
     @import url(./assets/styles.css);
     @import url(./assets/buttons.css);
+    @import url(./assets/rating.css);
 
 </style>
 <style scoped>

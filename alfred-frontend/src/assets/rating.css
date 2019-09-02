@@ -1,0 +1,58 @@
+/* >> Stars rating */
+.pws_ratings {
+    background: url("../assets/images/ratings.png") no-repeat;
+    width: 88px;
+    height: 1.4em;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin-right: 5px;
+}
+
+.star_1 {
+    background-position: 0 -18px;
+}
+
+.star_2 {
+    background-position: 0 -37px;
+}
+
+.star_3 {
+    background-position: 0 -56px;
+}
+
+.star_4 {
+    background-position: 0 -75px;
+}
+
+.star_5 {
+    background-position: 0 -94px;
+}
+
+.pws_ratings_small {
+    padding: 0 0 0 65px;
+    background: url("../assets/images/ratings-small.png") no-repeat;
+    height: 13px;
+    display: inline-block;
+}
+
+.star_1_small {
+    background-position: 0 0;
+}
+
+.star_2_small {
+    background-position: 0 -15px;
+}
+
+.star_3_small {
+    background-position: 0 -30px;
+}
+
+.star_4_small {
+    background-position: 0 -45px;
+}
+
+.star_5_small {
+    background-position: 0 -60px;
+}
+
+/* << Stars rating */

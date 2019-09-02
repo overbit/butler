@@ -16,7 +16,8 @@
         </div>
         
         <div class="card-deck">
-        <ListItem class="col-md-12 col-lg-4" v-for="item in items"
+            
+        <ListItem class="col-md-6 col-lg-4" v-for="item in items" 
                   v-bind:item="item"
                   v-bind:key="item.productCode" 
                   v-show="items.length > 0"/>
@@ -71,11 +72,7 @@
                 console.log("page", this.page);
                 this.page++;
                 let newResults = await this.getResults(this.page);
-                console.log("newResults", newResults);
-                console.log("this.items", this.items);
-                console.log("this.items.concat(newResults", this.items.concat(newResults));
                 this.items = this.items.concat(newResults);
-                console.log("this.items after", this.items);
             },
             async getResults(page = 1) {
             /* eslint-disable no-console */
@@ -105,7 +102,7 @@
                 return true;
             }
         },
-        async created() { 
+        async mounted() { 
             this.page = 1;
             this.items = await this.getResults();
         },

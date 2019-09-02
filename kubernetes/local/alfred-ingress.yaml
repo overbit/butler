@@ -4,18 +4,18 @@ metadata:
   name: alfred-ingress
   namespace: development-nginx
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
 spec:
   rules:
     - host: dev.alfred
       http:
         paths:
-        - path: /web/?(.*)
+        - path: /
           backend:
             serviceName: alfred-frontend
             servicePort: 8081
-        - path: /?(.*)
+        - path: /api/
           backend:
             serviceName: alfred-api
             servicePort: 8082

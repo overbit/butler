@@ -1,8 +1,8 @@
 
 @font-face {
     font-family: Lubalin Medium;
-    src: url(/assets/LubalinGraphStd-Medium.woff2) format("woff2"),
-          url(/assets/LubalinGraphStd-Medium.woff) format("woff");
+    src: url(../assets/LubalinGraphStd-Medium.woff2) format("woff2"),
+          url(../assets/LubalinGraphStd-Medium.woff) format("woff");
     font-style: normal;
     font-weight: 400
 }
