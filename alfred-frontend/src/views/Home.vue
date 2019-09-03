@@ -5,7 +5,7 @@
 
             <FacetCategory v-for="fc in facetCategoryList"
                         v-bind:facetCategory="fc"
-                        v-bind:selectedFacets="selectedFacets"
+                        v-bind:selectedFacets="selection.Facets"
                         v-bind:disabled="buttonDisabled"
                         v-bind:key="fc.id"
                         v-on:new-selection="updateFacetCategoryList"
@@ -52,15 +52,15 @@
                 error: null,
                 buttonDisabled: null,
                 facetCategoryList: [],
-                searchKeyword: "",
-                selectedFacets: {
-                    "TargetName": "",
-                    "Application": "",
-                    "Reactivity": "",
-                    "HostSpecies": "",
-                    "RequiredFacets": ["TargetName", "Application", "Reactivity", "HostSpecies"]
-                },
-                //facetCategory : { Name, Facets : { Name, Count, } }
+                selection: {
+                    Keyword : "",
+                    Facets: {
+                        TargetName: "",
+                        Application: "",
+                        Reactivity: "",
+                        HostSpecies: ""
+                    },
+                }
             }
         },
         methods: {
@@ -71,7 +71,7 @@
                 /* eslint-disable no-console */
                 
                 let that = this;
-                let params = { searchKeyword: that.searchKeyword, selectedFacets: that.selectedFacets };
+                let params = { selection: that.selection };
                 this.$router.push({ name: 'results', params: params });
             },
             updatedCustomOption(sel){
@@ -87,9 +87,9 @@
 
                 let that = this;
                 
-                that.selectedFacets[sel.category] = sel.id;
+                that.selection.Facets[sel.category] = sel.id;
 
-                let updatedList = await client.facets(that.selectedFacets);
+                let updatedList = await client.facets(that.selection);
 
                 for (let i = 0; i < that.facetCategoryList.length; i++) {
                     let item = that.facetCategoryList[i];
@@ -126,7 +126,7 @@
         async created() {
             let that = this;
 
-            that.facetCategoryList = await client.facets(that.selectedFacets);
+            that.facetCategoryList = await client.facets(that.selection);
             for (let i = 0; i < that.facetCategoryList.length; i++)
                 that.mapFacetOptions(that.facetCategoryList[i])
         }

@@ -11,7 +11,11 @@ namespace alfred_api
     {
         public MappingProfile()
         {
-            CreateMap<SearchQueryDto, SearchQuery>();
+            CreateMap<SearchQueryDto, SearchQuery>()
+                .ForMember(dto => dto.TargetName, opt => opt.MapFrom(model => model.Facets.TargetName))
+                .ForMember(dto => dto.Application, opt => opt.MapFrom(model => model.Facets.Application))
+                .ForMember(dto => dto.Reactivity, opt => opt.MapFrom(model => model.Facets.Reactivity))
+                .ForMember(dto => dto.HostSpecies, opt => opt.MapFrom(model => model.Facets.HostSpecies));
 
             CreateMap<SearchResultPocModel, ProductsDto>()
                 .ForMember(dto => dto.Products, opt => opt.MapFrom(model => model.Products))

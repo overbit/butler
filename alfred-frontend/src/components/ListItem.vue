@@ -11,22 +11,25 @@
                     </div>
                         <div class="col-4"> 
                             <span :class=getStarRatings()></span>
-                            <a class="text-nowrap" :href=datasheetUrl> Reviews ( <span v-html="item['reviewCount']"/> )</a>
+                            <a class="text-nowrap" :href=datasheetUrl>Reviews <span class="badge badge-secondary"  v-html="item['reviewCount']"/></a>
                         </div>
                      
                     </div>
                 </li>
                 <li class="list-group-item">
                     <strong>Application</strong>: <span v-html="applications" style="font-size:larger;"/></li>
-                <li class="list-group-item" v-show="item.conjugate">
-                    <strong>Conjugation</strong>: {{item.conjugate}}</li>
                 <li class="list-group-item" v-show="item.Reactivity">
                     <strong>Reactivity</strong>: {{item.Reactivity}}</li>
+                <li class="list-group-item" v-show="item.hostSpecies">
+                    <strong>Host species</strong>: {{item.hostSpecies}}</li>
                 <li class="list-group-item" v-show="item.SampleType">
                     <strong>SampleType</strong>: {{item.SampleType}}</li>
+                <li class="list-group-item" v-show="item.conjugate">
+                    <strong>Conjugation</strong>: <span v-bind:style="{ color: item.conjugateColor, 'font-weight' : 'bolder' } ">{{item.conjugate}} </span></li>
                 <li class="list-group-item text-truncate" :title=item.AlternativeNames>
                     <strong>Alternative Names</strong>: {{item.AlternativeNames}}</li>
             
+                j
             <!-- <ItemProperty class="col-md-6 col-lg-4" v-for="item in items"
                   v-bind:item="item"
                   v-bind:key="item.productCode" 

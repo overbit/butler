@@ -32,11 +32,11 @@ namespace alfred_api.Controllers
 
 
         [HttpPost("facet")]
-        public async Task<ActionResult> Facet(FacetQueryDto dto)
+        public async Task<ActionResult> Facet(SearchQueryDto dto)
         {
-            var facetRequired = dto.RequiredFacets;
-            var searchQuery = mapper.Map<SearchQuery>((SearchQueryDto)dto);
-            searchQuery.PageSize = 1;
+            var facetRequired = new[]{ "TargetName", "Application", "Reactivity", "HostSpecies" };
+            var searchQuery = mapper.Map<SearchQuery>(dto);
+            searchQuery.PageSize = 0;
 
             var searchResultModel = await searchService.GetFacets(searchQuery);
 

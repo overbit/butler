@@ -2,7 +2,6 @@
     <div class="section">
         <h2 class="section-title text-center m-5">Search results</h2>
         <div class="text-center m-5">
-    
             <b-button variant="outline-primary"
                     v-on:click="gotoHome">
                     Start again
@@ -12,7 +11,6 @@
                     v-on:click="gotoPWS">
                     Search on abcam.com
             </b-button>
-    
         </div>
         
         <div class="card-deck">
@@ -40,8 +38,7 @@
     export default {
         name: 'results',
         prop: {
-            selectedFacets: Array,
-            searchKeyword: String
+            selection: Object,
         },
         data() {
             return {
@@ -58,32 +55,26 @@
             gotoPWS() {
                 let that = this;
                 window.location.href = this.$abcamDomain +  "/products?"
-                + "keywords=" + that.searchKeyword
-                + "&selected.targetName=" +  that.selectedFacets["TargetName"] 
-                + "&selected.application=" + that.selectedFacets["Application"] 
-                + "&selected.hostSpecies=" + that.selectedFacets["HostSpecies"] 
-                + "&selected.reactivity=" + that.selectedFacets["Reactivity"] ;
+                + "keywords=" + that.selection.Keyword
+                + "&selected.targetName="   +  that.selection.Facets.TargetName 
+                + "&selected.application="  + that.selection.Facets.Application 
+                + "&selected.hostSpecies="  + that.selection.Facets.HostSpecies 
+                + "&selected.reactivity="   + that.selection.Facets.Reactivity ;
             },
             gotoHome() {
                 this.$router.push('/');
             },
             async loadMore() {
-            /* eslint-disable no-console */
-                console.log("page", this.page);
                 this.page++;
                 let newResults = await this.getResults(this.page);
                 this.items = this.items.concat(newResults);
             },
             async getResults(page = 1) {
-            /* eslint-disable no-console */
+                /* eslint-disable no-console */
                 let that = this;
                 let results = [];
-                that.selectedFacets = that.$attrs.selectedFacets;
-                that.searchKeyword = that.$attrs.searchKeyword;
-                let prodReq = that.selectedFacets;
-                prodReq.keyword = that.searchKeyword;
-
-                let res = await client.products(prodReq, page, this.size);
+                let searchRequest = that.$attrs.selection;
+                let res = await client.products(searchRequest, page, this.size);
 
                 if (res && res["products"]) {
                     results = res["products"].map(function (item) {
@@ -104,7 +95,7 @@
                     return false;
                 }
                 return true;
-            }
+            }   
         },
         async mounted() { 
             this.page = 1;
