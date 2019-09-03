@@ -56,7 +56,7 @@
                 return r;
             },
             gotoDatasheet(){
-                window.location.href = "https://www.abcam.com/" + this.item["productCode"];
+                window.location.href = this.$abcamDomain + "/" + this.item["productCode"];
             }
         },
         created() {

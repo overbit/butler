@@ -18,14 +18,12 @@
 </template>
 
 <style>
-   
     @import url(./assets/shards.min.css);
     @import url(./assets/shards-demo.min.css);
     @import url(./assets/shards-extras.min.css);
     @import url(./assets/styles.css);
     @import url(./assets/buttons.css);
     @import url(./assets/rating.css);
-
 </style>
 <style scoped>
 .container {

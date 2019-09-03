@@ -57,7 +57,7 @@
         methods: {
             gotoPWS() {
                 let that = this;
-                window.location.href = "http://www.abcam.com/products?"
+                window.location.href = this.$abcamDomain +  "/products?"
                 + "keywords=" + that.searchKeyword
                 + "&selected.targetName=" +  that.selectedFacets["TargetName"] 
                 + "&selected.application=" + that.selectedFacets["Application"] 
@@ -87,6 +87,10 @@
 
                 if (res && res["products"]) {
                     results = res["products"].map(function (item) {
+                        let tmp = new Object;
+                        tmp = item.productIndexModel;
+                        tmp.visibleProperties = item.visibleProperties;
+                       
                         return item.productIndexModel;
                     })
                 }
@@ -105,7 +109,7 @@
         async mounted() { 
             this.page = 1;
             this.items = await this.getResults();
-        },
+        }
     }
 </script>
 
