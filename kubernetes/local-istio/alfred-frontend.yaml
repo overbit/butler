@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: alfred-frontend-v1
+  namespace: development-istio
+  labels:
+    app: alfred-frontend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alfred-frontend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: alfred-frontend
+        version: v1
+    spec:
+      serviceAccountName: alfred-frontend
+      containers:
+      # Frontend
+      - image:  alfred-frontend:latest
+        imagePullPolicy: Never
+        name:  alfred-frontend
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP 
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alfred-frontend
+  namespace: development-istio
+  labels:
+    app: alfred-frontend
+    service: alfred-frontend
+spec:
+  ports:
+  - name: http 
+    port: 9080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: alfred-frontend
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: alfred-frontend
+  namespace: development-istio

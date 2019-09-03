@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: alfred-api-v1
+  namespace: development-istio
+  labels:
+    app: alfred-api
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alfred-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: alfred-api
+        version: v1
+    spec:
+      serviceAccountName: alfred-api
+      containers:
+      # API
+      - image:  alfred-api:latest
+        imagePullPolicy: Never
+        name:  alfred-api
+        livenessProbe:
+          httpGet:
+            path: /api/health/live
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health/ready
+            port: 80
+          initialDelaySeconds: 20
+          timeoutSeconds: 10
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: urls__search
+          value: http://172.29.57.49
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alfred-api
+  namespace: development-istio
+  labels:
+    app: alfred-api
+    service: alfred-api
+spec:
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: alfred-api
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: alfred-api
+  namespace: development-istio
