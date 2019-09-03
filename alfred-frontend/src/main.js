@@ -2,9 +2,18 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router'
 import store from './store'
+
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './assets/styles.css'
+import './assets/buttons.css'
+import './assets/rating.css'
+import './assets/shards.min.css'
+import './assets/shards-demo.min.css'
+import './assets/shards-extras.min.css'
+
 import axios from 'axios'
 
 Vue.use(BootstrapVue);

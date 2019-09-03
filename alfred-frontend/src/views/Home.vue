@@ -133,7 +133,7 @@
     }
 </script>
 
-<style>
+<style scoped>
 #search-form{
     justify-content:flex-end;
     max-width : 600px
