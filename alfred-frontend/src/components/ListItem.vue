@@ -16,7 +16,7 @@
                      
                     </div>
                 </li>
-                <li class="list-group-item">
+                <!-- <li class="list-group-item">
                     <strong>Application</strong>: <span v-html="applications" style="font-size:larger;"/></li>
                 <li class="list-group-item" v-show="item.Reactivity">
                     <strong>Reactivity</strong>: {{item.Reactivity}}</li>
@@ -25,15 +25,14 @@
                 <li class="list-group-item" v-show="item.SampleType">
                     <strong>SampleType</strong>: {{item.SampleType}}</li>
                 <li class="list-group-item" v-show="item.conjugate">
-                    <strong>Conjugation</strong>: <span v-bind:style="{ color: item.conjugateColor, 'font-weight' : 'bolder' } ">{{item.conjugate}} </span></li>
+                    <strong>Conjugation</strong>: <span v-bind:style="{ color: item.conjugateColor, 'font-weight' : 'bolder' }">{{item.conjugate}} </span></li>
                 <li class="list-group-item text-truncate" :title=item.AlternativeNames>
-                    <strong>Alternative Names</strong>: {{item.AlternativeNames}}</li>
-            
-                j
-            <!-- <ItemProperty class="col-md-6 col-lg-4" v-for="item in items"
-                  v-bind:item="item"
-                  v-bind:key="item.productCode" 
-                  v-show="items.length > 0"/> -->
+                    <strong>Alternative Names</strong>: {{item.AlternativeNames}}</li> -->
+        
+            <ItemProperty  v-for="p in properties"
+                  v-bind:item="p"
+                  v-bind:key="p.name" 
+                  v-show="properties.length > 0"/>
             </ul>
         </b-card-body>
         <b-card-body>
@@ -44,59 +43,65 @@
     </b-col>
 </template>
 
-<script>
+<script>/* eslint-disable */
+    import ItemProperty from '@/components/ItemProperty.vue';
+
     export default {
         name: 'ListItem',
         props: {
             item: Object,
         },
+        components: {
+            ItemProperty
+        },
         data() {
             return {
                 product: Object,
+                properties: Array,
                 title: "",
                 url: "",
                 applications: "",
-                datasheetUrl: this.$abcamDomain + "/" + this.item["productCode"],
+                datasheetUrl: this.$abcamDomain + "/" + this.item.productCode,
                 applicationVariants: ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"]
             }
         },
         methods: {
-            getApplications(list) {
-                if (!list) {
-                    return;
-                }
-                let res = [];
-                for (let i = 0; i < list.length; i++) {
-                    let curr = list[i];
-                    let hash = this.getHashForString(curr);
-                    let appVariant = this.applicationVariants[Math.abs(hash) % 7]; 
+            // getApplications(list) {
+            //     if (!list) {
+            //         return;
+            //     }
+            //     let res = [];
+            //     for (let i = 0; i < list.length; i++) {
+            //         let curr = list[i];
+            //         let hash = this.getHashForString(curr);
+            //         let appVariant = this.applicationVariants[Math.abs(hash) % 7]; 
 
-                    res.push("<span class='badge badge-" + appVariant + "'>"+curr+"</span>")
-                }
-                return res;
-            },
-            getHashForString(s){
-                var hash = 0, i, chr;
-                if (s.length === 0) return hash;
-                    for (i = 0; i < s.length; i++) {
-                        chr   = s.charCodeAt(i);
-                        hash  = ((hash << 5) - hash) + chr;
-                        hash |= 0; // Convert to 32bit integer
-                    }
-                return hash;    
-            },
-            listToString(l) {
-                if (!l) {
-                    return;
-                }
-                let r = "";
-                for (let i = 0; i < l.length; i++) {
-                    r += l[i];
-                    if (i !== l.length - 1)
-                        r+="  "
-                }
-                return r;
-            },
+            //         res.push("<span class='badge badge-" + appVariant + "'>"+curr+"</span>")
+            //     }
+            //     return res;
+            // },
+            // getHashForString(s){
+            //     var hash = 0, i, chr;
+            //     if (s.length === 0) return hash;
+            //         for (i = 0; i < s.length; i++) {
+            //             chr   = s.charCodeAt(i);
+            //             hash  = ((hash << 5) - hash) + chr;
+            //             hash |= 0; // Convert to 32bit integer
+            //         }
+            //     return hash;    
+            // },
+            // listToString(l) {
+            //     if (!l) {
+            //         return;
+            //     }
+            //     let r = "";
+            //     for (let i = 0; i < l.length; i++) {
+            //         r += l[i];
+            //         if (i !== l.length - 1)
+            //             r+="  "
+            //     }
+            //     return r;
+            // },
             gotoDatasheet(){
                 window.location.href = this.datasheetUrl;
             },
@@ -105,31 +110,57 @@
                     return  "pws_ratings star_".concat(this.item["starRating"]);
                 else
                     return "d-none"
+            },
+            getProperties(prop){
+                let that = this;
+                let visibleProperties = [];
+                
+                //console.log ("prop.visibleProperties", prop.visibleProperties.length);
+
+                for (let i = 0; i < prop.visibleProperties.length; i++){
+                    let tmpProperty = {};
+                    tmpProperty.name = prop.visibleProperties[i].propertyName;
+                    tmpProperty.value =  that.getParameterCaseInsensitive(prop, tmpProperty.name);
+                    
+                    if(tmpProperty.name == "ProductDescription"){
+                        continue;
+                    }
+                    else if(tmpProperty.name == "Conjugate"){
+                        tmpProperty.colour = that.getParameterCaseInsensitive(prop, "ConjugateColor");
+                    }
+
+                    visibleProperties.push(tmpProperty);
+                }
+                return visibleProperties;
+            },
+            getParameterCaseInsensitive(object, key) {
+                return object[Object.keys(object)
+                    .find(k => k.toLowerCase() === key.toLowerCase())
+                ];
             }
         },
         created() {
        
         },
         mounted() {
-            /* eslint-disable no-console */
             let that = this;
             //Default
             this.url = "";
-            console.log({"this.item" : that.item});
             if (that.item.productCode != undefined) {
-                
+                that.properties = that.getProperties(that.item);
+
                 that.title = that.item.productNameHtml.concat(" [", that.item.productCode, "]");
                 
                 if (that.item.images.length > 0)
                     that.url =  this.$abcamDomain + that.item.images[0];
 
-                that.applications = that.listToString(that.getApplications(that.item["application"]));
+                // that.applications = that.listToString(that.getApplications(that.item["application"]));
 
-                that.item.Reactivity = that.listToString(that.item["reactivity"]);
+                // that.item.Reactivity = that.listToString(that.item["reactivity"]);
 
-                that.item.AlternativeNames = that.listToString(that.item["alternativeName"]);
+                // that.item.AlternativeNames = that.listToString(that.item["alternativeName"]);
 
-                that.item.SampleType = that.listToString(that.item["sampleType"]);
+                // that.item.SampleType = that.listToString(that.item["sampleType"]);
             }
         }
     };

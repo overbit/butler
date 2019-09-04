@@ -70,7 +70,6 @@
                 this.items = this.items.concat(newResults);
             },
             async getResults(page = 1) {
-                /* eslint-disable no-console */
                 let that = this;
                 let results = [];
                 let searchRequest = that.$attrs.selection;

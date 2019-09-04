@@ -1,25 +1,23 @@
 <template>
-    <li class="list-group-item" v-if="property.name == 'Application'">
-        <strong>{{property.name}}</strong>: <span v-html="applications" style="font-size:larger;"></span>
-    </li>
-    <li class="list-group-item" v-else>
-        <strong>{{property.name}}</strong>: {{property.value}}
+    <li class="list-group-item" v-show="property.value && property.value != ''">
+        <strong>{{property.name}}</strong>: <span v-html="property.value" v-bind:style="property.styles" /> 
     </li>
 </template>
 
 <script>
     export default {
-        name: 'ListItem',
+        name: 'ItemProperty',
         props: {
-            property: Object,
+            item: Object,
         },
         data() {
             return {
+                property: Object,
                 applicationVariants: ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"]
             }
         },
         methods: {
-            getApplications(list) {
+            getApplicationsBadged(list) {
                 if (!list) {
                     return;
                 }
@@ -43,26 +41,37 @@
                     }
                 return hash;    
             },
-            listToString(l) {
-                if (!l) {
+            toHtml(list) {
+                if (!list) {
                     return;
                 }
                 let r = "";
-                for (let i = 0; i < l.length; i++) {
-                    r += l[i];
-                    if (i !== l.length - 1)
+                for (let i = 0; i < list.length; i++) {
+                    r += list[i];
+                    if (i !== list.length - 1)
                         r+="  "
                 }
                 return r;
-            },
-            gotoDatasheet(){
-                window.location.href = this.$abcamDomain + "/" + this.item["productCode"];
             }
         },
         created() {
         },
         mounted() {
-            this.applications = this.listToString(this.getApplications(this.property.value));
+            let that = this;
+            that.property = that.item;
+
+            if (Array.isArray(that.property.value)){
+                switch (that.property.name){
+                    case "Application":
+                        that.property.value = that.getApplicationsBadged(that.item.value);
+                        break;
+                    case "Conjugate":
+                        that.property.styles = { color: that.item.colour, 'font-weight' : 'bolder' };
+                        break;
+                }
+
+                that.property.value = that.toHtml(that.property.value);
+            }
         }
     };
 </script>
