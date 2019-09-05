@@ -2,33 +2,22 @@
     <b-col md-12>
     <b-card no-body class="overflow-hidden mb-4" >
 
-        <b-card-img-lazy :src=url class="img-top card-img" v-show="url != ''"></b-card-img-lazy>
+        <b-card-img-lazy :src=url 
+                        class="img-top card-img"
+                        @error.native="setFallbackImageUrl"/>
         <b-card-body :title=title>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <div class="row"> 
                         <div class="col"><strong>Description</strong>: {{item.productDescriptionHtml}}
                     </div>
-                        <div class="col-4"> 
-                            <span :class=getStarRatings()></span>
-                            <a class="text-nowrap" :href=datasheetUrl>Reviews <span class="badge badge-secondary"  v-html="item['reviewCount']"/></a>
-                        </div>
+                    <div class="col-4"> 
+                        <span :class=getStarRatings()></span>
+                        <a class="text-nowrap" :href=datasheetUrl>Reviews <span class="badge badge-secondary"  v-html="item['reviewCount']"/></a>
+                    </div>
                      
                     </div>
-                </li>
-                <!-- <li class="list-group-item">
-                    <strong>Application</strong>: <span v-html="applications" style="font-size:larger;"/></li>
-                <li class="list-group-item" v-show="item.Reactivity">
-                    <strong>Reactivity</strong>: {{item.Reactivity}}</li>
-                <li class="list-group-item" v-show="item.hostSpecies">
-                    <strong>Host species</strong>: {{item.hostSpecies}}</li>
-                <li class="list-group-item" v-show="item.SampleType">
-                    <strong>SampleType</strong>: {{item.SampleType}}</li>
-                <li class="list-group-item" v-show="item.conjugate">
-                    <strong>Conjugation</strong>: <span v-bind:style="{ color: item.conjugateColor, 'font-weight' : 'bolder' }">{{item.conjugate}} </span></li>
-                <li class="list-group-item text-truncate" :title=item.AlternativeNames>
-                    <strong>Alternative Names</strong>: {{item.AlternativeNames}}</li> -->
-        
+                </li>        
             <ItemProperty  v-for="p in properties"
                   v-bind:item="p"
                   v-bind:key="p.name" 
@@ -47,12 +36,12 @@
     import ItemProperty from '@/components/ItemProperty.vue';
 
     export default {
-        name: 'ListItem',
+        name: 'Card',
         props: {
             item: Object,
         },
         components: {
-            ItemProperty
+            ItemProperty,
         },
         data() {
             return {
@@ -66,42 +55,6 @@
             }
         },
         methods: {
-            // getApplications(list) {
-            //     if (!list) {
-            //         return;
-            //     }
-            //     let res = [];
-            //     for (let i = 0; i < list.length; i++) {
-            //         let curr = list[i];
-            //         let hash = this.getHashForString(curr);
-            //         let appVariant = this.applicationVariants[Math.abs(hash) % 7]; 
-
-            //         res.push("<span class='badge badge-" + appVariant + "'>"+curr+"</span>")
-            //     }
-            //     return res;
-            // },
-            // getHashForString(s){
-            //     var hash = 0, i, chr;
-            //     if (s.length === 0) return hash;
-            //         for (i = 0; i < s.length; i++) {
-            //             chr   = s.charCodeAt(i);
-            //             hash  = ((hash << 5) - hash) + chr;
-            //             hash |= 0; // Convert to 32bit integer
-            //         }
-            //     return hash;    
-            // },
-            // listToString(l) {
-            //     if (!l) {
-            //         return;
-            //     }
-            //     let r = "";
-            //     for (let i = 0; i < l.length; i++) {
-            //         r += l[i];
-            //         if (i !== l.length - 1)
-            //             r+="  "
-            //     }
-            //     return r;
-            // },
             gotoDatasheet(){
                 window.location.href = this.datasheetUrl;
             },
@@ -109,14 +62,12 @@
                 if(this.item["starRating"])
                     return  "pws_ratings star_".concat(this.item["starRating"]);
                 else
-                    return "d-none"
+                    return "d-none";
             },
             getProperties(prop){
                 let that = this;
                 let visibleProperties = [];
-                
-                //console.log ("prop.visibleProperties", prop.visibleProperties.length);
-
+   
                 for (let i = 0; i < prop.visibleProperties.length; i++){
                     let tmpProperty = {};
                     tmpProperty.name = prop.visibleProperties[i].propertyName;
@@ -137,30 +88,22 @@
                 return object[Object.keys(object)
                     .find(k => k.toLowerCase() === key.toLowerCase())
                 ];
+            },
+            setFallbackImageUrl(event){
+                event.target.src = 'https://a.static-abcam.com/CmsMedia/Media/lvoimage984x492px.jpg';
             }
         },
         created() {
-       
         },
         mounted() {
             let that = this;
             //Default
-            this.url = "";
             if (that.item.productCode != undefined) {
                 that.properties = that.getProperties(that.item);
 
                 that.title = that.item.productNameHtml.concat(" [", that.item.productCode, "]");
-                
                 if (that.item.images.length > 0)
                     that.url =  this.$abcamDomain + that.item.images[0];
-
-                // that.applications = that.listToString(that.getApplications(that.item["application"]));
-
-                // that.item.Reactivity = that.listToString(that.item["reactivity"]);
-
-                // that.item.AlternativeNames = that.listToString(that.item["alternativeName"]);
-
-                // that.item.SampleType = that.listToString(that.item["sampleType"]);
             }
         }
     };

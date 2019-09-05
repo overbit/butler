@@ -15,7 +15,7 @@
         
         <div class="card-deck">
             
-        <ListItem class="col-md-6 col-lg-4" v-for="item in items" 
+        <Card class="col-md-6 col-lg-4" v-for="item in items" 
                   v-bind:item="item"
                   v-bind:key="item.productCode" 
                   v-show="items.length > 0"/>
@@ -32,7 +32,7 @@
 <script>
     // @ is an alias to /src
     import client from '@/client.js';
-    import ListItem from '@/components/ListItem.vue';
+    import Card from '@/components/Card.vue';
     import { Array } from 'core-js';
 
     export default {
@@ -49,7 +49,7 @@
             }
         },
         components: {
-            ListItem
+            Card
         },
         methods: {
             gotoPWS() {
