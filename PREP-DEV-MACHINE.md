@@ -54,3 +54,17 @@ minikube dashboard
 ```bash
 choco upgrade minikube kubernetes-cli docker-cli kubernetes-helm
 ```
+
+### To enable minikube and/or kubectl autocomplete on Windows
+
+```bash
+# Install kubectl / minikube autocomplete
+minikube.exe completion bash > ~/minikube-completion.bash
+kubectl.exe completion bash > ~/kubectl-completion.bash
+
+# Source in those files in .bashrc like so:
+source ~/minikube-completion.bash
+source ~/kubectl-completion.bash
+alias minikube='minikube.exe'
+alias kubectl='kubectl.exe'
+```
