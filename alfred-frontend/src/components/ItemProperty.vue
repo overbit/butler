@@ -65,12 +65,12 @@
                     case "Application":
                         that.property.value = that.getApplicationsBadged(that.item.value);
                         break;
-                    case "Conjugate":
-                        that.property.styles = { color: that.item.colour, 'font-weight' : 'bolder' };
-                        break;
                 }
-
                 that.property.value = that.toHtml(that.property.value);
+            }
+
+            if (that.property.colour){
+                that.property.styles = { color: that.item.colour, 'font-weight' : 'bolder' };
             }
         }
     };
