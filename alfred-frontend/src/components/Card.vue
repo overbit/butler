@@ -112,7 +112,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .card-img {
-    width: unset;
     padding: 1rem;
     object-fit: scale-down;
 }
@@ -124,14 +123,20 @@
     padding: 1rem;
     object-fit: scale-down;
     }
+    
+    .card .list-group-item{
+        padding:.8125rem 1.875rem
+    }
 }
-
 
 .card{
     background-color:#fff;
     border:none;
     border-radius:.625rem;
     box-shadow:0 .46875rem 2.1875rem rgba(90,97,105,.1),0 .9375rem 1.40625rem rgba(90,97,105,.1),0 .25rem .53125rem rgba(90,97,105,.12),0 .125rem .1875rem rgba(90,97,105,.1)
+}
+.list-group-item{
+    padding:0.75rem 0rem;
 }
 .card>.list-group:first-child .list-group-item:first-child{
     border-top-left-radius:.625rem;
@@ -140,9 +145,6 @@
 .card>.list-group:last-child .list-group-item:last-child{
     border-bottom-right-radius:.625rem;
     border-bottom-left-radius:.625rem
-}
-.card .list-group-item{
-    padding:.8125rem 1.875rem
 }
 .card .card-text{
     margin-bottom:1.5625rem
