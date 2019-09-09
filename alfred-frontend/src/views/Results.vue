@@ -1,16 +1,22 @@
 <template>
     <div class="section">
         <h2 class="section-title text-center m-5">Search results</h2>
-        <div class="text-center m-5">
+        <div class="row py-4">
+            <div class="col">
             <b-button variant="outline-primary"
                     v-on:click="gotoHome">
                     Start again
             </b-button>
-
+            </div>
+            <div class="col">
             <b-button variant="outline-secondary" 
                     v-on:click="gotoPWS">
                     Search on abcam.com
             </b-button>
+            </div>
+            <div class="col" v-html=" 'Your selection : '+   textifySelection()">
+                
+            </div>
         </div>
         
         <div class="card-deck">
@@ -94,7 +100,19 @@
                     return false;
                 }
                 return true;
-            }   
+            },
+            textifySelection(){
+                let txt = "";
+                let that = this;
+                let facets = Object.keys( that.$attrs.selection.Facets) ;
+
+                for (let i=0;  i< facets.length; i++){
+                    if(that.$attrs.selection.Facets[facets[i]] && that.$attrs.selection.Facets[facets[i]] != '' )
+                      txt += "<span class='badge badge-secondary mx-1'>" + facets[i] + ": " + that.$attrs.selection.Facets[facets[i]] + "</span>";
+                }
+
+                return txt;
+            }
         },
         async mounted() { 
             this.page = 1;
