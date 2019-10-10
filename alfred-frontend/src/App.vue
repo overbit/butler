@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" id="mainNav">
             <div class="container">
-                <a class="navbar-brand pws-logo" href="/"></a>
+                <a class="navbar-brand" href="/"></a>
                 <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler noborder">
                     <span class="navbar-text actions">Alfred</span>
                 </button>
